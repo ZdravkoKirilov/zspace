@@ -11,6 +11,12 @@ export default {
       },
       fontFamily: {
         primary: ['Merriweather', 'serif'],
+      },
+      fontSize: {
+        nav: 'clamp(1rem, 1.3vw, 2rem)',
+      },
+      spacing: {
+        nav: 'clamp(16px, 4vw, 80px)'
       }
     },
   },
