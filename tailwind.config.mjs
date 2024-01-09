@@ -14,6 +14,7 @@ export default {
       },
       fontSize: {
         nav: 'clamp(1rem, 1.3vw, 2rem)',
+        hero: 'clamp(2rem, 8vw, 8rem)',
       },
       spacing: {
         nav: 'clamp(16px, 4vw, 80px)'
