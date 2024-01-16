@@ -4,21 +4,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#F59D88',
-        text: '#D9D9D9',
+        primary: "#F59D88",
+        default: "#D9D9D9",
         background: "#1C0C06",
-        white: "#FFFFFF"
+        white: "#FFFFFF",
       },
       fontFamily: {
-        primary: ['Merriweather', 'serif'],
+        primary: ["Merriweather", "serif"],
       },
       fontSize: {
-        nav: 'clamp(1rem, 1.3vw, 2rem)',
-        hero: 'clamp(2rem, 8vw, 8rem)',
+        nav: "clamp(1rem, 1.3vw, 2rem)",
+        hero: "clamp(2rem, 8vw, 8rem)",
+        headline: "clamp(1.3rem, 2vw, 3rem)",
       },
       spacing: {
-        nav: 'clamp(16px, 4vw, 80px)'
-      }
+        nav: "clamp(16px, 4vw, 80px)",
+      },
     },
   },
   plugins: [],

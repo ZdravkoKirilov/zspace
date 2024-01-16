@@ -3,15 +3,26 @@ import { Image } from "astro:assets";
 
 import Layout from "../layouts/Layout.astro";
 import Hero from "../assets/hero.jpg";
+import Heart from "../assets/heart.svg";
 ---
 
 <Layout title="Welcome to Astro.">
-  <div class="flex flex-row justify-between mt-8">
-    <div class="flex flex-col justify-between grow mt-8" >
-      <h1 class="text-hero text-primary">Hey I'm Z</h1>
-      <span class="text-center">and...</span>
+  <div class="flex flex-col gap-32">
+    <div class="flex flex-row mt-16 gap-32">
+      <div class="flex flex-col justify-between mt-8">
+        <h1 class="text-hero text-primary">Hey I'm Z</h1>
+        <span class="text-center">...and</span>
+      </div>
+      <span class="text-primary">
+        <Image src={Hero} alt="Hero image" class="opacity-60" />
+      </span>
     </div>
-    <Image src={Hero} alt="Hero image" />
+
+    <div class="flex flex-row flex-wrap gap-8 items-center">
+      <p class="text-headline">I</p>
+      <Image src={Heart} alt="Heart" class="w-32" />
+      <p class="text-headline">crafting products for the web.</p>
+    </div>
   </div>
 </Layout>
 
