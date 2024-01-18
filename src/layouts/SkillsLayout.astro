@@ -1,5 +1,6 @@
 ---
 import MainNavigation from "../components/MainNavigation.astro";
+import SideNavigation from "../components/SideNavigation.astro";
 interface Props {
   title: string;
 }
@@ -26,7 +27,11 @@ const { title } = Astro.props;
         <MainNavigation />
       </header>
 
-      <div class="mt-16">
+      <div class="flex flex-row gap-20 mt-24">
+        <aside>
+          <SideNavigation />
+        </aside>
+
         <slot />
       </div>
     </main>

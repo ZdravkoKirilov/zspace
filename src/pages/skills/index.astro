@@ -1,13 +1,79 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import SkillCard from "../../components/SkillCard.astro";
+import SkillsLayout from "../../layouts/SkillsLayout.astro";
+
+import reactImage from "../../assets/react.svg";
+import tsImage from "../../assets/typescript.svg";
+import nodeImage from "../../assets/nodejs.svg";
+import mongoImage from "../../assets/mongodb.svg";
+import jestImage from "../../assets/jest.svg";
+import awsImage from "../../assets/aws.svg";
 ---
 
-<Layout title="Projects">
+<SkillsLayout title="Projects">
   <main>
-    <h1>My skills</h1>
+    <ul class="flex flex-row gap-12 flex-wrap list-none m-0">
+      <li class="flex basis-0 grow">
+        <SkillCard
+          title="React"
+          image={reactImage}
+          experience={7}
+          projects={6}
+          className="grow"
+        />
+      </li>
 
-    <article>Stuff about my skills</article>
+      <li class="flex basis-0 grow">
+        <SkillCard
+          title="Typescript"
+          image={tsImage}
+          experience={7}
+          projects={7}
+          className="grow"
+        />
+      </li>
+
+      <li class="flex basis-0 grow">
+        <SkillCard
+          title="Node.js"
+          image={nodeImage}
+          experience={4}
+          projects={5}
+          className="grow"
+        />
+      </li>
+
+      <li class="flex basis-0 grow">
+        <SkillCard
+          title="Testing"
+          image={jestImage}
+          experience={7}
+          projects={6}
+          className="grow"
+        />
+      </li>
+
+      <li class="flex basis-0 grow">
+        <SkillCard
+          title="MongoDB"
+          image={mongoImage}
+          experience={4}
+          projects={3}
+          className="grow"
+        />
+      </li>
+
+      <li class="flex basis-0 grow">
+        <SkillCard
+          title="Cloud"
+          image={awsImage}
+          experience={4}
+          projects={5}
+          className="grow"
+        />
+      </li>
+    </ul>
   </main>
-</Layout>
+</SkillsLayout>
 
 <style></style>

@@ -1,0 +1,43 @@
+---
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.split("/")[2];
+---
+
+<nav>
+  <ul class="flex flex-col text-side-nav gap-side-nav">
+    <li class="self-start">
+      <div class="px-2">
+        <a href="/skills">Skills</a>
+      </div>
+
+      <div class={!currentPath ? "h-0.5 w-full bg-primary" : ""}></div>
+    </li>
+
+    <li class="self-start">
+      <div class="px-2">
+        <a href="/skills/projects">Projects</a>
+      </div>
+
+      <div class={currentPath === "projects" ? "h-0.5 w-full bg-primary" : ""}>
+      </div>
+    </li>
+
+    <li class="self-start">
+      <div class="px-2">
+        <a href="/skills/learning">Learning</a>
+      </div>
+
+      <div class={currentPath === "learning" ? "h-0.5 w-full bg-primary" : ""}>
+      </div>
+    </li>
+
+    <li class="self-start">
+      <div class="px-2">
+        <a href="/skills/work">Work</a>
+      </div>
+
+      <div class={currentPath === "work" ? "h-0.5 w-full bg-primary" : ""}>
+      </div>
+    </li>
+  </ul>
+</nav>
