@@ -1,19 +1,35 @@
 ---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
 interface Props {
   title: string;
+  image: ImageMetadata;
   experience: number;
   projects: number;
-  technologies: number;
   className?: string;
+  imageClass?: string;
 }
 
-const { experience, projects, title, className, technologies } = Astro.props;
+const {
+  experience,
+  projects,
+  title,
+  image,
+  className,
+  imageClass = "",
+} = Astro.props;
 ---
 
 <div
-  class=`bg-card p-4 flex flex-col gap-6 justify-between w-[220px] ${className}`
+  class=`bg-card p-4 flex flex-col gap-6 justify-between max-w-[220px] ${className}`
 >
-  <header>
+  <header class="flex flex-row gap-6">
+    <Image
+      src={image}
+      alt={title}
+      class={`max-w-[50px] text-white !${imageClass}`}
+    />
     <h2 class="font-bold text-xl">{title}</h2>
   </header>
 
@@ -24,9 +40,6 @@ const { experience, projects, title, className, technologies } = Astro.props;
       </p>
       <p>
         <span>{projects}</span> projects
-      </p>
-      <p>
-        <span>{technologies}</span> technologies
       </p>
     </div>
 

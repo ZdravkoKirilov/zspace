@@ -1,20 +1,20 @@
 ---
-import SkillCard from "../../components/SkillCard.astro";
-import SkillsLayout from "../../layouts/SkillsLayout.astro";
+import Card from "../../../components/TechCard.astro";
+import CraftLayout from "../../../layouts/CraftLayout.astro";
 
-import reactImage from "../../assets/react.svg";
-import tsImage from "../../assets/typescript.svg";
-import nodeImage from "../../assets/nodejs.svg";
-import mongoImage from "../../assets/mongodb.svg";
-import jestImage from "../../assets/jest.svg";
-import awsImage from "../../assets/aws.svg";
+import reactImage from "../../../assets/react.svg";
+import tsImage from "../../../assets/typescript.svg";
+import nodeImage from "../../../assets/nodejs.svg";
+import mongoImage from "../../../assets/mongodb.svg";
+import jestImage from "../../../assets/jest.svg";
+import awsImage from "../../../assets/aws.svg";
 ---
 
-<SkillsLayout title="Projects">
+<CraftLayout title="Technologies">
   <main>
     <ul class="flex flex-row gap-12 flex-wrap list-none m-0">
       <li class="flex basis-0 grow">
-        <SkillCard
+        <Card
           title="React"
           image={reactImage}
           experience={7}
@@ -24,7 +24,7 @@ import awsImage from "../../assets/aws.svg";
       </li>
 
       <li class="flex basis-0 grow">
-        <SkillCard
+        <Card
           title="Typescript"
           image={tsImage}
           experience={7}
@@ -34,7 +34,7 @@ import awsImage from "../../assets/aws.svg";
       </li>
 
       <li class="flex basis-0 grow">
-        <SkillCard
+        <Card
           title="Node.js"
           image={nodeImage}
           experience={4}
@@ -44,7 +44,7 @@ import awsImage from "../../assets/aws.svg";
       </li>
 
       <li class="flex basis-0 grow">
-        <SkillCard
+        <Card
           title="Testing"
           image={jestImage}
           experience={7}
@@ -54,17 +54,18 @@ import awsImage from "../../assets/aws.svg";
       </li>
 
       <li class="flex basis-0 grow">
-        <SkillCard
+        <Card
           title="MongoDB"
           image={mongoImage}
           experience={4}
           projects={3}
           className="grow"
+          imageClass="max-w-[35px]"
         />
       </li>
 
       <li class="flex basis-0 grow">
-        <SkillCard
+        <Card
           title="Cloud"
           image={awsImage}
           experience={4}
@@ -74,6 +75,6 @@ import awsImage from "../../assets/aws.svg";
       </li>
     </ul>
   </main>
-</SkillsLayout>
+</CraftLayout>
 
 <style></style>

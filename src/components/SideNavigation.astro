@@ -7,15 +7,25 @@ const currentPath = pathname.split("/")[2];
   <ul class="flex flex-col text-side-nav gap-side-nav">
     <li class="self-start">
       <div class="px-2">
-        <a href="/skills">Skills</a>
+        <a href="/craft/skills">Skills</a>
       </div>
 
-      <div class={!currentPath ? "h-0.5 w-full bg-primary" : ""}></div>
+      <div class={currentPath === "skills" ? "h-0.5 w-full bg-primary" : ""}>
+      </div>
     </li>
 
     <li class="self-start">
       <div class="px-2">
-        <a href="/skills/projects">Projects</a>
+        <a href="/craft/tech">Tech</a>
+      </div>
+
+      <div class={currentPath === "tech" ? "h-0.5 w-full bg-primary" : ""}>
+      </div>
+    </li>
+
+    <li class="self-start">
+      <div class="px-2">
+        <a href="/craft/projects">Projects</a>
       </div>
 
       <div class={currentPath === "projects" ? "h-0.5 w-full bg-primary" : ""}>
@@ -24,7 +34,7 @@ const currentPath = pathname.split("/")[2];
 
     <li class="self-start">
       <div class="px-2">
-        <a href="/skills/learning">Learning</a>
+        <a href="/craft/learning">Learning</a>
       </div>
 
       <div class={currentPath === "learning" ? "h-0.5 w-full bg-primary" : ""}>
@@ -33,7 +43,7 @@ const currentPath = pathname.split("/")[2];
 
     <li class="self-start">
       <div class="px-2">
-        <a href="/skills/work">Work</a>
+        <a href="/craft/work">Work</a>
       </div>
 
       <div class={currentPath === "work" ? "h-0.5 w-full bg-primary" : ""}>
