@@ -1,0 +1,122 @@
+---
+import { Image } from "astro:assets";
+
+import { getElapsedTimeInYears } from "../../../utils/dates";
+
+import reactImage from "../../../assets/react.svg";
+import chevronUpIcon from "../../../assets/icons/chevron-up.svg?raw";
+import starIcon from "../../../assets/icons/star.svg?raw";
+import CraftLayout from "../../../layouts/CraftLayout.astro";
+import { technologies, projects, TechId } from "../../../models";
+
+const techInfo = technologies[TechId.React];
+const projectsByWeight = techInfo.projects
+  .map((projectId) => projects[projectId])
+  .sort((a, b) => {
+    if (a.weight === "highlighted") return -1;
+    if (b.weight === "highlighted") return 1;
+    return 0;
+  });
+
+const totalYears = getElapsedTimeInYears(
+  projectsByWeight.map((elem) => ({
+    start: elem.time.start,
+    end: elem.time.end,
+  }))
+);
+---
+
+<CraftLayout title="Technologies">
+  <main class="w-full flex flex-col gap-10">
+    <details class="bg-card p-4 w-full">
+      <summary class="remove-marker no-toggling">
+        <header class="flex gap-4 justify-between items-center">
+          <div class="flex gap-8 items-center">
+            <div class="flex gap-2 items-center">
+              <Image
+                src={reactImage}
+                alt="React js image"
+                class="max-w-[40px]"
+              />
+              <h1 class="text-xl font-bold">React</h1>
+            </div>
+
+            <div class="flex gap-4 items-center text-sm">
+              {totalYears.years > 0 && <span>{totalYears.years} years</span>}
+              {
+                projectsByWeight.length > 0 && (
+                  <span>{projectsByWeight.length} projects</span>
+                )
+              }
+              <span>2 courses</span>
+            </div>
+          </div>
+
+          <div
+            class="bg-none border-none toggler text-primary flex gap-2 items-center"
+          >
+            <span>Show more</span>
+            <div class="max-w-[20px] chevron-icon">
+              <Fragment set:html={chevronUpIcon} />
+            </div>
+          </div>
+        </header>
+      </summary>
+
+      <div class="mt-4 flex flex-wrap gap-5 text-sm">
+        {
+          projectsByWeight.map((project) => {
+            const isHighlighted = project.weight === "highlighted";
+
+            return (
+              <div class="flex gap-1 items-center">
+                <a href="" class="underline underline-offset-2">
+                  {project.display_name}
+                </a>
+                {isHighlighted && (
+                  <div class="max-w-[10px] text-primary">
+                    <Fragment set:html={starIcon} />
+                  </div>
+                )}
+              </div>
+            );
+          })
+        }
+      </div>
+    </details>
+
+    <article>
+      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor
+      sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+      dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
+      ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+      Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor
+      sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+      dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
+      ipsum dolor sit amet
+    </article>
+  </main>
+</CraftLayout>
+
+<style>
+  .remove-marker {
+    list-style: none;
+  }
+  .remove-marker::marker {
+    display: none;
+  }
+  .no-toggling {
+    pointer-events: none;
+  }
+  .toggler {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  details .chevron-icon {
+    will-change: transform;
+    transition: transform 0.15s ease-in-out;
+  }
+  details[open] .chevron-icon {
+    transform: rotate(180deg);
+  }
+</style>
