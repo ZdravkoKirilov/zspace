@@ -1,11 +1,12 @@
 ---
+import cx from "classnames";
 const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.split("/")[2];
 ---
 
 <nav>
   <ul class="flex flex-col text-side-nav gap-side-nav pl-2">
-    <li class="self-start">
+    <li class={cx("self-start", { "text-primary": currentPath === "skills" })}>
       <div class="pr-2">
         <a href="/craft/skills">Skills</a>
       </div>
@@ -14,7 +15,7 @@ const currentPath = pathname.split("/")[2];
       </div>
     </li>
 
-    <li class="self-start">
+    <li class={cx("self-start", { "text-primary": currentPath === "tech" })}>
       <div class="pr-2">
         <a href="/craft/tech">Tech</a>
       </div>
@@ -23,7 +24,9 @@ const currentPath = pathname.split("/")[2];
       </div>
     </li>
 
-    <li class="self-start">
+    <li
+      class={cx("self-start", { "text-primary": currentPath === "projects" })}
+    >
       <div class="pr-2">
         <a href="/craft/projects">Projects</a>
       </div>
@@ -32,7 +35,9 @@ const currentPath = pathname.split("/")[2];
       </div>
     </li>
 
-    <li class="self-start">
+    <li
+      class={cx("self-start", { "text-primary": currentPath === "learning" })}
+    >
       <div class="pr-2">
         <a href="/craft/learning">Learning</a>
       </div>
@@ -41,7 +46,7 @@ const currentPath = pathname.split("/")[2];
       </div>
     </li>
 
-    <li class="self-start">
+    <li class={cx("self-start", { "text-primary": currentPath === "work" })}>
       <div class="pr-2">
         <a href="/craft/work">Work</a>
       </div>

@@ -1,12 +1,49 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import bracketIcon from "../../assets/icons/bracket.svg?raw";
 ---
 
 <Layout title="About me">
-  <main>
-    <h1>About me</h1>
+  <main class="flex">
+    <div class="text-primary min-w-[100px] rotate-180">
+      <Fragment set:html={bracketIcon} />
+    </div>
 
-    <article>Stuff about me</article>
+    <article class="grow flex flex-col gap-12 leading-loose">
+      <div class="flex flex-col gap-2">
+        <p>
+          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+          dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+          dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+          dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+          dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+          Lorem ipsum dolor sit
+        </p>
+
+        <p>
+          amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+          dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+          dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
+          dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+        </p>
+      </div>
+      <p>
+        You can reach me on <a href="" class="text-primary underline"
+          >LinkedIn</a
+        > or <a href="" class="text-primary underline">GitHub</a>. My email is
+        zdravkovasilchevkirilov@gmail.com
+      </p>
+    </article>
+
+    <div class="text-primary min-w-[100px]">
+      <Fragment set:html={bracketIcon} />
+    </div>
   </main>
 </Layout>
 

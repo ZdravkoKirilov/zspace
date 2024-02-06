@@ -1,11 +1,13 @@
 ---
+import cx from "classnames";
+
 const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.split("/").at(1);
 ---
 
 <nav>
   <ul class="flex flex-row text-nav gap-nav serif">
-    <li>
+    <li class={cx({ "text-primary": !currentPath })}>
       <div class="px-2">
         <a href="/">Home</a>
       </div>
@@ -13,7 +15,7 @@ const currentPath = pathname.split("/").at(1);
       <div class={!currentPath ? "h-0.5 w-full bg-primary" : ""}></div>
     </li>
 
-    <li>
+    <li class={cx({ "text-primary": currentPath === "craft" })}>
       <div class="px-2">
         <a href="/craft">My craft</a>
       </div>
@@ -22,7 +24,7 @@ const currentPath = pathname.split("/").at(1);
       </div>
     </li>
 
-    <li>
+    <li class={cx({ "text-primary": currentPath === "about" })}>
       <div class="px-2">
         <a href="/about">About me</a>
       </div>
@@ -31,7 +33,7 @@ const currentPath = pathname.split("/").at(1);
       </div>
     </li>
 
-    <li>
+    <li class={cx({ "text-primary": currentPath === "blog" })}>
       <div class="px-2">
         <a href="/blog">Blog</a>
       </div>
