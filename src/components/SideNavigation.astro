@@ -1,57 +1,93 @@
 ---
 import cx from "classnames";
+import { isCraftPathActive, paths } from "../paths";
 const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.split("/")[2];
 ---
 
 <nav>
   <ul class="flex flex-col text-side-nav gap-side-nav pl-2">
-    <li class={cx("self-start", { "text-primary": currentPath === "skills" })}>
+    <li
+      class={cx("self-start", {
+        "text-primary": isCraftPathActive(pathname, paths.skills),
+      })}
+    >
       <div class="pr-2">
-        <a href="/craft/skills">Skills</a>
+        <a href={paths.skills}>Skills</a>
       </div>
 
-      <div class={currentPath === "skills" ? "h-0.5 w-full bg-primary" : ""}>
-      </div>
-    </li>
-
-    <li class={cx("self-start", { "text-primary": currentPath === "tech" })}>
-      <div class="pr-2">
-        <a href="/craft/tech">Tech</a>
-      </div>
-
-      <div class={currentPath === "tech" ? "h-0.5 w-full bg-primary" : ""}>
+      <div
+        class={isCraftPathActive(pathname, paths.skills)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
       </div>
     </li>
 
     <li
-      class={cx("self-start", { "text-primary": currentPath === "projects" })}
+      class={cx("self-start", {
+        "text-primary": isCraftPathActive(pathname, paths.technologies),
+      })}
     >
       <div class="pr-2">
-        <a href="/craft/projects">Projects</a>
+        <a href={paths.technologies}>Tech</a>
       </div>
 
-      <div class={currentPath === "projects" ? "h-0.5 w-full bg-primary" : ""}>
+      <div
+        class={isCraftPathActive(pathname, paths.technologies)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
       </div>
     </li>
 
     <li
-      class={cx("self-start", { "text-primary": currentPath === "learning" })}
+      class={cx("self-start", {
+        "text-primary": isCraftPathActive(pathname, paths.projects),
+      })}
     >
       <div class="pr-2">
-        <a href="/craft/learning">Learning</a>
+        <a href={paths.projects}>Projects</a>
       </div>
 
-      <div class={currentPath === "learning" ? "h-0.5 w-full bg-primary" : ""}>
+      <div
+        class={isCraftPathActive(pathname, paths.projects)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
       </div>
     </li>
 
-    <li class={cx("self-start", { "text-primary": currentPath === "work" })}>
+    <li
+      class={cx("self-start", {
+        "text-primary": isCraftPathActive(pathname, paths.courses),
+      })}
+    >
       <div class="pr-2">
-        <a href="/craft/work">Work</a>
+        <a href={paths.courses}>Learning</a>
       </div>
 
-      <div class={currentPath === "work" ? "h-0.5 w-full bg-primary" : ""}>
+      <div
+        class={isCraftPathActive(pathname, paths.courses)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
+      </div>
+    </li>
+
+    <li
+      class={cx("self-start", {
+        "text-primary": isCraftPathActive(pathname, paths.jobs),
+      })}
+    >
+      <div class="pr-2">
+        <a href={paths.jobs}>Work</a>
+      </div>
+
+      <div
+        class={isCraftPathActive(pathname, paths.jobs)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
       </div>
     </li>
   </ul>

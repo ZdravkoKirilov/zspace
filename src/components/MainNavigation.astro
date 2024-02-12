@@ -1,44 +1,61 @@
 ---
 import cx from "classnames";
+import { paths, isTopPathActive } from "../paths.ts";
 
 const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.split("/").at(1);
 ---
 
 <nav>
   <ul class="flex flex-row text-nav gap-nav serif">
-    <li class={cx({ "text-primary": !currentPath })}>
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.home) })}>
       <div class="px-2">
-        <a href="/">Home</a>
+        <a href={paths.home}>Home</a>
       </div>
 
-      <div class={!currentPath ? "h-0.5 w-full bg-primary" : ""}></div>
-    </li>
-
-    <li class={cx({ "text-primary": currentPath === "craft" })}>
-      <div class="px-2">
-        <a href="/craft">My craft</a>
-      </div>
-
-      <div class={currentPath === "craft" ? "h-0.5 w-full bg-primary" : ""}>
+      <div
+        class={isTopPathActive(pathname, paths.home)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
       </div>
     </li>
 
-    <li class={cx({ "text-primary": currentPath === "about" })}>
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.craft) })}>
       <div class="px-2">
-        <a href="/about">About me</a>
+        <a href={paths.craft}>My craft</a>
       </div>
 
-      <div class={currentPath === "about" ? "h-0.5 w-full bg-primary" : ""}>
+      <div
+        class={isTopPathActive(pathname, paths.craft)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
       </div>
     </li>
 
-    <li class={cx({ "text-primary": currentPath === "blog" })}>
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.about) })}>
       <div class="px-2">
-        <a href="/blog">Blog</a>
+        <a href={paths.about}>About me</a>
       </div>
 
-      <div class={currentPath === "blog" ? "h-0.5 w-full bg-primary" : ""}>
+      <div
+        class={isTopPathActive(pathname, paths.about)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
+      </div>
+    </li>
+
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.blog) })}>
+      <div class="px-2">
+        <a href={paths.blog}>Blog</a>
+      </div>
+
+      <div
+        class={isTopPathActive(pathname, paths.blog)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
       </div>
     </li>
   </ul>

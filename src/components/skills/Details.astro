@@ -1,0 +1,11 @@
+---
+import type { SkillId } from "../../models";
+
+type Props = {
+  skill: SkillId;
+};
+
+const { skill } = Astro.props;
+---
+
+return <div>{skill}</div>
