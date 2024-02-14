@@ -3,15 +3,10 @@ import SkillDetails from "../../../components/skills/Details.astro";
 import { SkillId } from "../../../models";
 
 export function getStaticPaths() {
-  return [
-    { params: { skill: SkillId.Accessibility } },
-    { params: { skill: SkillId.CodeReviews } },
-    { params: { skill: SkillId.DataModeling } },
-  ] as const;
+  return Object.values(SkillId).map((skill) => ({ params: { skill } }));
 }
 
 const { skill } = Astro.params;
-
 ---
 
 <SkillDetails skill={skill} />

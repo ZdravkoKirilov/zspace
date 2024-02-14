@@ -12,11 +12,11 @@ export const paths = {
   jobs: "/craft/jobs",
   courses: "/craft/courses",
 
-  skill: (id: SkillId) => `craft/skills/${id}`,
-  technology: (id: TechId) => `craft/technologies/${id}`,
-  project: (id: ProjectId) => `craft/projects/${id}`,
-  job: (id: WorkId) => `craft/jobs/${id}`,
-  course: (id: LearnId) => `craft/courses/${id}`,
+  skill: (id: SkillId) => `/craft/skills/${id}`,
+  technology: (id: TechId) => `/craft/technologies/${id}`,
+  project: (id: ProjectId) => `/craft/projects/${id}`,
+  job: (id: WorkId) => `/craft/jobs/${id}`,
+  course: (id: LearnId) => `/craft/courses/${id}`,
 } as const;
 
 type TopPath =

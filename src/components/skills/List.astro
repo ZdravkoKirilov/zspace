@@ -1,6 +1,8 @@
 ---
 import Card from "./Card.astro";
 import CraftLayout from "../../layouts/CraftLayout.astro";
+import { paths } from "../../paths";
+import { SkillId } from "../../models";
 ---
 
 <CraftLayout title="Skills">
@@ -13,6 +15,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
           projects={6}
           technologies={7}
           className="grow"
+          url={paths.skill(SkillId.UiUxLiteracy)}
         />
       </li>
 
@@ -23,6 +26,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
           projects={6}
           technologies={7}
           className="grow"
+          url={paths.skill(SkillId.Accessibility)}
         />
       </li>
 
@@ -33,6 +37,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
           projects={6}
           technologies={7}
           className="grow"
+          url={paths.skill(SkillId.FrontEndArchitecture)}
         />
       </li>
 
@@ -43,6 +48,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
           projects={6}
           technologies={7}
           className="grow"
+          url={paths.skill(SkillId.FullStackDevelopment)}
         />
       </li>
 
@@ -53,6 +59,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
           projects={6}
           technologies={7}
           className="grow"
+          url={paths.skill(SkillId.DesignSystems)}
         />
       </li>
 
@@ -63,6 +70,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
           projects={6}
           technologies={7}
           className="grow"
+          url={paths.skill(SkillId.Testing)}
         />
       </li>
 
@@ -73,6 +81,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
           projects={6}
           technologies={7}
           className="grow"
+          url={paths.skill(SkillId.Mentoring)}
         />
       </li>
     </ul>

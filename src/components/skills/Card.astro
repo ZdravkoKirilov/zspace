@@ -1,14 +1,15 @@
-
 ---
 interface Props {
   title: string;
   experience: number;
   projects: number;
   technologies: number;
+  url: string;
   className?: string;
 }
 
-const { experience, projects, title, className, technologies } = Astro.props;
+const { experience, projects, title, className, technologies, url } =
+  Astro.props;
 ---
 
 <div
@@ -32,7 +33,7 @@ const { experience, projects, title, className, technologies } = Astro.props;
     </div>
 
     <p>
-      <a class="underline text-primary text-xs">Learn more</a>
+      <a class="underline text-primary text-xs" href={url}>Learn more</a>
     </p>
   </div>
 </div>

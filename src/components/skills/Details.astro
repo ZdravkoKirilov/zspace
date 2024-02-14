@@ -1,4 +1,5 @@
 ---
+import CraftLayout from "../../layouts/CraftLayout.astro";
 import type { SkillId } from "../../models";
 
 type Props = {
@@ -8,4 +9,4 @@ type Props = {
 const { skill } = Astro.props;
 ---
 
-return <div>{skill}</div>
+<CraftLayout title={skill}>{skill}</CraftLayout>
