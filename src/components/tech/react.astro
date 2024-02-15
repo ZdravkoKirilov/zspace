@@ -1,13 +1,13 @@
 ---
 import { Image } from "astro:assets";
 
-import { getElapsedTimeInYears } from "../../../utils/dates";
+import { getElapsedTimeInYears } from "../../utils/dates";
 
 import reactImage from "../../../assets/react.svg";
 import chevronUpIcon from "../../../assets/icons/chevron-up.svg?raw";
 import starIcon from "../../../assets/icons/star.svg?raw";
-import CraftLayout from "../../../layouts/CraftLayout.astro";
-import { technologies, projects, TechId } from "../../../models";
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import { technologies, projects, TechId } from "../../models";
 
 const techInfo = technologies[TechId.React];
 const projectsByWeight = techInfo.projects
@@ -22,7 +22,7 @@ const totalYears = getElapsedTimeInYears(
   projectsByWeight.map((elem) => ({
     start: elem.time.start,
     end: elem.time.end,
-  }))
+  })),
 );
 ---
 

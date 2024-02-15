@@ -1,0 +1,12 @@
+---
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import { TechId } from "../../models";
+
+type Props = {
+    tech: TechId;
+};
+
+const { tech } = Astro.props;
+---
+
+<CraftLayout title={tech}>{tech}</CraftLayout>

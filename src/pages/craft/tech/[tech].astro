@@ -1,0 +1,12 @@
+---
+import TechDetails from "../../../components/tech/Details.astro";
+import { TechId } from "../../../models";
+
+export function getStaticPaths() {
+    return Object.values(TechId).map((tech) => ({ params: { tech } }));
+}
+
+const { tech } = Astro.params;
+---
+
+<TechDetails tech={tech} />
