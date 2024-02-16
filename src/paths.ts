@@ -13,7 +13,7 @@ export const paths = {
   courses: "/craft/courses",
 
   skill: (id: SkillId) => `/craft/skills/${id}`,
-  technology: (id: TechId) => `/craft/technologies/${id}`,
+  tech: (id: TechId) => `/craft/tech/${id}`,
   project: (id: ProjectId) => `/craft/projects/${id}`,
   job: (id: WorkId) => `/craft/jobs/${id}`,
   course: (id: LearnId) => `/craft/courses/${id}`,

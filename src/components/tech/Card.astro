@@ -9,7 +9,7 @@ interface Props {
   projects: number;
   className?: string;
   imageClass?: string;
-  detailsUrl: string;
+  url: string;
 }
 
 const {
@@ -18,7 +18,7 @@ const {
   title,
   image,
   className,
-  detailsUrl,
+  url,
   imageClass = "",
 } = Astro.props;
 ---
@@ -46,7 +46,7 @@ const {
     </div>
 
     <p>
-      <a class="underline text-primary text-xs" href={detailsUrl}>Learn more</a>
+      <a class="underline text-primary text-xs" href={url}>Learn more</a>
     </p>
   </div>
 </div>
