@@ -22,6 +22,7 @@ export default {
       spacing: {
         nav: "clamp(16px, 4vw, 80px)",
         "side-nav": "clamp(16px, 2.5vw, 40px)",
+        list: "2rem",
       },
     },
   },

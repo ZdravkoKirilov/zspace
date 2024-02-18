@@ -1,12 +1,15 @@
 ---
+import type { Tech } from "../../content/_tech";
 import CraftLayout from "../../layouts/CraftLayout.astro";
-import { TechId } from "../../models";
 
 type Props = {
-    tech: TechId;
+  tech: Tech;
 };
 
 const { tech } = Astro.props;
 ---
 
-<CraftLayout title={tech}>{tech}</CraftLayout>
+<CraftLayout title={tech.display_name}>
+  <div>{tech.display_name}</div>
+  <slot />
+</CraftLayout>

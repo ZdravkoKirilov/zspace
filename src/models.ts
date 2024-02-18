@@ -363,6 +363,7 @@ export const learnings = {
       start: new Date("2021-01-01"),
       end: new Date("2021-01-01") as Date | undefined,
     },
+    tech: [TechId.Express],
     skills: [
       SkillId.RestfulApis,
       SkillId.FullStackDevelopment,
@@ -373,3 +374,8 @@ export const learnings = {
     projects: [ProjectId.OAuthApp],
   },
 } as const;
+
+export enum Weight {
+  Highlighted = "highlighted",
+  Normal = "normal",
+}

@@ -1,88 +1,56 @@
 ---
-import Card from "./Card.astro";
-import CraftLayout from "../../layouts/CraftLayout.astro";
+import { getCollection } from "astro:content";
+import resolveConfig from "tailwindcss/resolveConfig";
 
-import reactImage from "../../assets/react.svg";
-import tsImage from "../../assets/typescript.svg";
-import nodeImage from "../../assets/nodejs.svg";
-import mongoImage from "../../assets/mongodb.svg";
-import jestImage from "../../assets/jest.svg";
-import awsImage from "../../assets/aws.svg";
+import tailwindConfig from "../../../tailwind.config";
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import Card from "./Card.astro";
 import { paths } from "../../paths";
-import { TechId } from "../../models";
+
+const listGap = resolveConfig(tailwindConfig).theme.spacing.list;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/tech/*.{svg,jpeg,jpg,png,gif}"
+);
+
+const techList = await getCollection("tech");
 ---
 
 <CraftLayout title="Technologies">
-  <main>
-    <ul class="flex flex-row gap-12 flex-wrap list-none m-0">
-      <li class="flex basis-0 grow">
-        <Card
-          title="React"
-          image={reactImage}
-          experience={7}
-          projects={6}
-          className="grow"
-          url={paths.tech(TechId.React)}
-        />
-      </li>
+  <main class="grow">
+    <ul class="zs-grid list-none m-0">
+      {
+        techList.map(async (tech) => {
+          const loadImage = images[tech.data.image_path];
 
-      <li class="flex basis-0 grow">
-        <Card
-          title="Typescript"
-          image={tsImage}
-          experience={7}
-          projects={7}
-          className="grow"
-          url={paths.tech(TechId.Typescript)}
-        />
-      </li>
+          if (!loadImage) {
+            throw new Error("No image found for " + tech.data.image_path);
+          }
+          const image = await loadImage();
 
-      <li class="flex basis-0 grow">
-        <Card
-          title="Node.js"
-          image={nodeImage}
-          experience={4}
-          projects={5}
-          className="grow"
-          url=""
-        />
-      </li>
-
-      <li class="flex basis-0 grow">
-        <Card
-          title="Testing"
-          image={jestImage}
-          experience={7}
-          projects={6}
-          className="grow"
-          url={paths.tech(TechId.TestingLibrary)}
-        />
-      </li>
-
-      <li class="flex basis-0 grow">
-        <Card
-          title="MongoDB"
-          image={mongoImage}
-          experience={4}
-          projects={3}
-          className="grow"
-          imageClass="max-w-[35px]"
-          url={paths.tech(TechId.MongoDB)}
-        />
-      </li>
-
-      <li class="flex basis-0 grow">
-        <Card
-          title="Cloud"
-          image={awsImage}
-          experience={4}
-          projects={5}
-          className="grow"
-          url={paths.tech(TechId.Aws)}
-        />
-      </li>
+          return (
+            <li class="flex">
+              <Card
+                title={tech.data.display_name}
+                image={image.default}
+                experience={7}
+                projects={6}
+                url={paths.tech(tech.data.id)}
+                className="grow"
+              />
+            </li>
+          );
+        })
+      }
     </ul>
   </main>
 </CraftLayout>
 
-<style></style>
+<style define:vars={{ listGap }}>
+  .zs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 1fr;
+    grid-gap: var(--listGap);
+  }
+</style>

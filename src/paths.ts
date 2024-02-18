@@ -1,4 +1,8 @@
-import type { LearnId, ProjectId, SkillId, TechId, WorkId } from "./models";
+import type { LearnId } from "./content/_learning";
+import type { ProjectId } from "./content/_project";
+import type { SkillId } from "./content/_skill";
+import type { TechId } from "./content/_tech";
+import type { WorkId } from "./content/_work";
 
 export const paths = {
   home: "/",
