@@ -3,10 +3,10 @@ import { z } from "astro:content";
 import { Weight } from "./_shared";
 
 export enum SkillId {
-  UiUxLiteracy = "ui-ux-literacy",
+  UiUxLiteracy = "uiux",
   Accessibility = "accessibility",
-  FrontEndArchitecture = "front-end-architecture",
-  FullStackDevelopment = "full-stack-development",
+  FrontEndArchitecture = "fe-architecture",
+  FullStackDevelopment = "fullstack",
   DesignSystems = "design-systems",
   Mentoring = "mentoring",
   CodeReviews = "code-reviews",

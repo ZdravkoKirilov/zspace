@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/MainLayout.astro";
 import Hero from "../assets/hero.jpg";
 import Heart from "../assets/heart.svg";
+import { paths } from "../paths";
 ---
 
 <Layout title="Welcome to Astro.">
@@ -21,7 +22,10 @@ import Heart from "../assets/heart.svg";
     <div class="flex flex-row flex-wrap gap-8 items-center">
       <p class="text-headline">I</p>
       <Image src={Heart} alt="Heart" class="w-32" />
-      <p class="text-headline">crafting products for the web.</p>
+      <p class="text-headline">
+        <a class="bold underline" href={paths.craft}>crafting</a> products for the
+        web.
+      </p>
     </div>
   </div>
 </Layout>

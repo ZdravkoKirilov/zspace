@@ -1,12 +1,15 @@
 ---
+import type { Skill } from "../../content/_skill";
 import CraftLayout from "../../layouts/CraftLayout.astro";
-import type { SkillId } from "../../models";
 
 type Props = {
-  skill: SkillId;
+  skill: Skill;
 };
 
 const { skill } = Astro.props;
 ---
 
-<CraftLayout title={skill}>{skill}</CraftLayout>
+<CraftLayout title={skill.display_name}>
+  <div>{skill.display_name}</div>
+  <slot />
+</CraftLayout>

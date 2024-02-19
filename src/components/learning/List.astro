@@ -6,24 +6,24 @@ import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
 
-const skillsList = await getCollection("skills").then((items) =>
+const learningList = await getCollection("learn").then((items) =>
   items.sort((a, b) => a.data.order - b.data.order)
 );
 ---
 
-<CraftLayout title="Skills">
+<CraftLayout title="Learnings">
   <main class="grow">
     <CardsList>
       {
-        skillsList.map(async (skill) => {
+        learningList.map(async (learn) => {
           return (
             <li class="flex">
               <Card
-                title={skill.data.display_name}
+                title={learn.data.display_name}
                 experience={7}
                 projects={6}
                 technologies={2}
-                url={paths.skillDetails(skill.data.id)}
+                url={paths.learnDetails(learn.data.id)}
                 className="grow"
               />
             </li>

@@ -59,15 +59,15 @@ const pathname = new URL(Astro.request.url).pathname;
 
     <li
       class={cx("self-start", {
-        "text-primary": isCraftPathActive(pathname, paths.courses),
+        "text-primary": isCraftPathActive(pathname, paths.learn),
       })}
     >
       <div class="pr-2">
-        <a href={paths.courses}>Learning</a>
+        <a href={paths.learn}>Learning</a>
       </div>
 
       <div
-        class={isCraftPathActive(pathname, paths.courses)
+        class={isCraftPathActive(pathname, paths.learn)
           ? "h-0.5 w-full bg-primary"
           : ""}
       >

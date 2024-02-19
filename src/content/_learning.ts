@@ -5,23 +5,18 @@ import { SkillId } from "./_skill";
 import { TechId } from "./_tech";
 
 export enum LearnId {
-  OAuthCourse = "oauth-course",
-  AIFundamentalsCourse = "ai-fundamentals-course",
-  DataLiteracyCourse = "data-literacy-course",
-  GraphQLCourse = "graphql-course",
-  PostgreSQLCourse = "postgresql-course",
+  OAuthCourse = "oauth",
+  AIFundamentalsCourse = "ai-fundamentals",
+  DataLiteracyCourse = "data-literacy",
+  GraphQLCourse = "graphql",
+  PostgreSQLCourse = "postgresql",
 }
 
-const learn = z.object({
+export const learn = z.object({
   id: z.nativeEnum(LearnId),
   display_name: z.string(),
   weight: z.nativeEnum(Weight),
   order: z.number().int(),
-
-  from: z.date(),
-  to: z.date().optional(),
-  provider_name: z.string(),
-  provider_url: z.string().url(),
 
   skills: z.array(z.nativeEnum(SkillId)),
   tech: z.array(z.nativeEnum(TechId)),

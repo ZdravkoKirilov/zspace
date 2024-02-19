@@ -8,15 +8,21 @@ interface Props {
   experience: number;
   projects: number;
   className?: string;
+  imageClassName?: string;
   url: string;
 }
 
-const { experience, projects, title, image, className, url } = Astro.props;
+const { experience, projects, title, image, className, url, imageClassName } =
+  Astro.props;
 ---
 
 <div class=`bg-card p-4 flex flex-col gap-6 justify-between ${className}`>
   <header class="flex flex-row gap-6">
-    <Image src={image} alt={title} class={`max-w-[50px] text-white`} />
+    <Image
+      src={image}
+      alt={title}
+      class={`max-w-[50px] text-white ${imageClassName}`}
+    />
     <h2 class="font-bold text-xl">{title}</h2>
   </header>
 

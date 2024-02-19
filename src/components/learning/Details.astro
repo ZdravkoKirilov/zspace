@@ -1,0 +1,15 @@
+---
+import type { Learn } from "../../content/_learning";
+import CraftLayout from "../../layouts/CraftLayout.astro";
+
+type Props = {
+  learn: Learn;
+};
+
+const { learn } = Astro.props;
+---
+
+<CraftLayout title={learn.display_name}>
+  <div>{learn.display_name}</div>
+  <slot />
+</CraftLayout>

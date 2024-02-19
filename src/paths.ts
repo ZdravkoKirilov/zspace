@@ -14,13 +14,13 @@ export const paths = {
   technologies: "/craft/tech",
   projects: "/craft/projects",
   jobs: "/craft/jobs",
-  courses: "/craft/courses",
+  learn: "/craft/learn",
 
-  skill: (id: SkillId) => `/craft/skills/${id}`,
-  tech: (id: TechId) => `/craft/tech/${id}`,
-  project: (id: ProjectId) => `/craft/projects/${id}`,
-  job: (id: WorkId) => `/craft/jobs/${id}`,
-  course: (id: LearnId) => `/craft/courses/${id}`,
+  skillDetails: (id: SkillId) => `/craft/skills/${id}`,
+  techDetails: (id: TechId) => `/craft/tech/${id}`,
+  projectDetails: (id: ProjectId) => `/craft/projects/${id}`,
+  jobDetails: (id: WorkId) => `/craft/jobs/${id}`,
+  learnDetails: (id: LearnId) => `/craft/learn/${id}`,
 } as const;
 
 type TopPath =
@@ -41,7 +41,7 @@ type CraftPath =
   | typeof paths.technologies
   | typeof paths.projects
   | typeof paths.jobs
-  | typeof paths.courses;
+  | typeof paths.learn;
 
 export const isCraftPathActive = (pathname: string, path: CraftPath) => {
   const currentPath = pathname.split("/").at(2);

@@ -1,0 +1,15 @@
+---
+import { Project } from "../../content/_project";
+import CraftLayout from "../../layouts/CraftLayout.astro";
+
+type Props = {
+  project: Project;
+};
+
+const { project } = Astro.props;
+---
+
+<CraftLayout title={project.display_name}>
+  <div>{project.display_name}</div>
+  <slot />
+</CraftLayout>

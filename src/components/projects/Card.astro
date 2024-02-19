@@ -2,14 +2,13 @@
 interface Props {
   title: string;
   experience: number;
-  projects: number;
+  skills: number;
   technologies: number;
   url: string;
   className?: string;
 }
 
-const { experience, projects, title, className, technologies, url } =
-  Astro.props;
+const { experience, skills, title, className, technologies, url } = Astro.props;
 ---
 
 <div class=`bg-card p-4 flex flex-col gap-6 justify-between ${className}`>
@@ -23,7 +22,7 @@ const { experience, projects, title, className, technologies, url } =
         <span>{experience}</span> years
       </p>
       <p>
-        <span>{projects}</span> projects
+        <span>{skills}</span> skills
       </p>
       <p>
         <span>{technologies}</span> technologies

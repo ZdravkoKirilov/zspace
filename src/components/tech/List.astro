@@ -1,24 +1,25 @@
 ---
 import { getCollection } from "astro:content";
-import resolveConfig from "tailwindcss/resolveConfig";
 
-import tailwindConfig from "../../../tailwind.config";
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import Card from "./Card.astro";
 import { paths } from "../../paths";
-
-const listGap = resolveConfig(tailwindConfig).theme.spacing.list;
+import CardsList from "../CardsList.astro";
+import classNames from "classnames";
+import { TechId } from "../../content/_tech";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/tech/*.{svg,jpeg,jpg,png,gif}"
 );
 
-const techList = await getCollection("tech");
+const techList = await getCollection("tech").then((items) =>
+  items.sort((a, b) => a.data.order - b.data.order)
+);
 ---
 
 <CraftLayout title="Technologies">
   <main class="grow">
-    <ul class="zs-grid list-none m-0">
+    <CardsList>
       {
         techList.map(async (tech) => {
           const loadImage = images[tech.data.image_path];
@@ -35,22 +36,16 @@ const techList = await getCollection("tech");
                 image={image.default}
                 experience={7}
                 projects={6}
-                url={paths.tech(tech.data.id)}
+                url={paths.techDetails(tech.data.id)}
                 className="grow"
+                imageClassName={classNames({
+                  "max-w-[35px]": tech.data.id === TechId.MongoDB,
+                })}
               />
             </li>
           );
         })
       }
-    </ul>
+    </CardsList>
   </main>
 </CraftLayout>
-
-<style define:vars={{ listGap }}>
-  .zs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-auto-rows: 1fr;
-    grid-gap: var(--listGap);
-  }
-</style>

@@ -2,6 +2,7 @@ import { z } from "astro:content";
 
 import { Weight } from "./_shared";
 import { TechId } from "./_tech";
+import { SkillId } from "./_skill";
 
 export enum ProjectId {
   /* ISG */
@@ -22,11 +23,11 @@ export enum ProjectId {
   TravelAgentApp = "travel-agent-app",
 
   /* Headstart */
-  AtsApp = "ats-app",
+  AtsApp = "ats",
   ScreeningApp = "screening-app",
 
   /* LL */
-  eCommerceApp = "ecommerce-app",
+  LoyaltyLionAdmin = "ll-admin",
 
   /* Personal */
   Portfolio = "portfolio",
@@ -49,7 +50,7 @@ export const project = z.object({
   image: z.string().url().optional(),
 
   tech: z.array(z.nativeEnum(TechId)),
-  skills: z.array(z.string()),
+  skills: z.array(z.nativeEnum(SkillId)),
 });
 
 export type Project = z.infer<typeof project>;
