@@ -9,6 +9,7 @@ export default {
         background: "#1C0C06",
         white: "#FFFFFF",
         card: "#271F1C",
+        separator: "#271f1c",
       },
       fontFamily: {
         primary: ["Merriweather", "serif"],
@@ -23,6 +24,7 @@ export default {
         nav: "clamp(16px, 4vw, 80px)",
         "side-nav": "clamp(16px, 2.5vw, 40px)",
         list: "2rem",
+        item: "2rem",
       },
     },
   },

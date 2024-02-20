@@ -1,0 +1,48 @@
+---
+import resolveConfig from "tailwindcss/resolveConfig";
+
+import tailwindConfig from "../../../tailwind.config";
+import Accordion from "../Accordion.astro";
+import { Work } from "../../content/_work";
+import classNames from "classnames";
+
+type Props = {
+  job: Work;
+  className?: string;
+};
+
+const primaryColor = resolveConfig(tailwindConfig).theme.colors.primary;
+const itemPadding = resolveConfig(tailwindConfig).theme.space.item;
+
+const { className, job } = Astro.props;
+---
+
+<article class="flex gap-8 min-h-[100px]">
+  <div class="zs-job-decoration relative pt-item pb-item">
+    <div class="w-[35px] h-[35px] rounded-full bg-primary"></div>
+  </div>
+
+  <div
+    class={classNames(
+      "zs-job-content pt-item pb-item border-b-2 border-card border-solid grow items-center",
+      className
+    )}
+  >
+    <Accordion>
+      <div slot="header">{job.display_name}</div>
+      <div slot="content"><slot /></div>
+    </Accordion>
+  </div>
+</article>
+
+<style define:vars={{ primaryColor, itemPadding }}>
+  .zs-job-decoration::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 2.5px);
+    width: 5px;
+    background-color: var(--primaryColor);
+  }
+</style>

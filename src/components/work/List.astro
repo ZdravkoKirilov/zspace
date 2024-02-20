@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import JobEntry from "./JobEntry.astro";
+
+const jobsList = await getCollection("work").then((items) =>
+  items.sort((a, b) => a.data.order - b.data.order)
+);
+---
+
+<CraftLayout title="Work experience">
+  <main class="grow">
+    <ul>
+      {
+        jobsList.map(async (job, index) => {
+          const { Content } = await job.render();
+
+          return (
+            <li>
+              <JobEntry job={job.data} className={index === 0 ? "border-t-2" : ""}>
+                <Content />
+              </JobEntry>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </main>
+</CraftLayout>

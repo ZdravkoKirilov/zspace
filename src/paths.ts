@@ -13,13 +13,13 @@ export const paths = {
   skills: "/craft/skills",
   technologies: "/craft/tech",
   projects: "/craft/projects",
-  jobs: "/craft/jobs",
+  work: "/craft/work",
   learn: "/craft/learn",
 
   skillDetails: (id: SkillId) => `/craft/skills/${id}`,
   techDetails: (id: TechId) => `/craft/tech/${id}`,
   projectDetails: (id: ProjectId) => `/craft/projects/${id}`,
-  jobDetails: (id: WorkId) => `/craft/jobs/${id}`,
+  workDetails: (id: WorkId) => `/craft/work/${id}`,
   learnDetails: (id: LearnId) => `/craft/learn/${id}`,
 } as const;
 
@@ -40,7 +40,7 @@ type CraftPath =
   | typeof paths.skills
   | typeof paths.technologies
   | typeof paths.projects
-  | typeof paths.jobs
+  | typeof paths.work
   | typeof paths.learn;
 
 export const isCraftPathActive = (pathname: string, path: CraftPath) => {
