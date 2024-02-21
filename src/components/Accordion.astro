@@ -8,7 +8,8 @@ import chevronUpIcon from "../assets/icons/chevron-up.svg?raw";
       <slot name="header" />
 
       <div class="bg-none border-none text-primary flex gap-2 items-center">
-        <span>Show more</span>
+        <span class="more">Show more</span>
+        <span class="less">Show less</span>
         <div class="max-w-[20px] chevron-icon">
           <Fragment set:html={chevronUpIcon} />
         </div>
@@ -20,6 +21,9 @@ import chevronUpIcon from "../assets/icons/chevron-up.svg?raw";
 </details>
 
 <style>
+  .less {
+    display: none;
+  }
   summary {
     cursor: pointer;
   }
@@ -31,9 +35,16 @@ import chevronUpIcon from "../assets/icons/chevron-up.svg?raw";
   }
   details .chevron-icon {
     will-change: transform;
+    transform: rotate(180deg);
     transition: transform 0.15s ease-in-out;
   }
   details[open] .chevron-icon {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
+  }
+  details[open] .more {
+    display: none;
+  }
+  details[open] .less {
+    display: initial;
   }
 </style>

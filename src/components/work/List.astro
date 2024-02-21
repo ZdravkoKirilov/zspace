@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import rocketIcon from "../../assets/icons/rocket.svg?raw";
 
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import JobEntry from "./JobEntry.astro";
@@ -10,7 +11,10 @@ const jobsList = await getCollection("work").then((items) =>
 ---
 
 <CraftLayout title="Work experience">
-  <main class="grow">
+  <main class="grow relative">
+    <div class="w-[30px] text-primary mb-1.5 rocket">
+      <Fragment set:html={rocketIcon} />
+    </div>
     <ul>
       {
         jobsList.map(async (job, index) => {
@@ -18,7 +22,10 @@ const jobsList = await getCollection("work").then((items) =>
 
           return (
             <li>
-              <JobEntry job={job.data} className={index === 0 ? "border-t-2" : ""}>
+              <JobEntry
+                job={job.data}
+                className={index === 0 ? "border-t-2" : ""}
+              >
                 <Content />
               </JobEntry>
             </li>
@@ -28,3 +35,11 @@ const jobsList = await getCollection("work").then((items) =>
     </ul>
   </main>
 </CraftLayout>
+
+<style>
+  .rocket {
+    transform: rotate(-45deg);
+    position: absolute;
+    top: -35px;
+  }
+</style>
