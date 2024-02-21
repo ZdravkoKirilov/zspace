@@ -3,8 +3,9 @@ import resolveConfig from "tailwindcss/resolveConfig";
 
 import tailwindConfig from "../../../tailwind.config";
 import Accordion from "../Accordion.astro";
-import { Work } from "../../content/_work";
+import type { Work } from "../../content/_work";
 import classNames from "classnames";
+import { toDisplayDate } from "../../utils/dates";
 
 type Props = {
   job: Work;
@@ -24,14 +25,24 @@ const { className, job } = Astro.props;
 
   <div
     class={classNames(
-      "zs-job-content pt-item pb-item border-b-2 border-card border-solid grow items-center",
+      "pt-item pb-item border-b-2 border-card border-solid grow items-center",
       className
     )}
   >
-    <Accordion>
-      <div slot="header">{job.display_name}</div>
-      <div slot="content"><slot /></div>
-    </Accordion>
+    <div class="flex flex-col gap-1">
+      <header class="flex items-center justify-between flex-wrap gap-2">
+        <h2 class="text-xl font-bold">{job.display_name}</h2>
+        <time>{toDisplayDate(job.from)} - {toDisplayDate(job.to)}</time>
+      </header>
+      <Accordion>
+        <h3 slot="header">
+          <a href={job.employer_url} target="_blank" class="underline"
+            >{job.employer_name}</a
+          >
+        </h3>
+        <div slot="content" class="mt-12"><slot /></div>
+      </Accordion>
+    </div>
   </div>
 </article>
 

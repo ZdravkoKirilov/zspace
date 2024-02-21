@@ -15,7 +15,7 @@ function mergeIntervals<T extends Interval>(data: T[]): T[] {
       ({
         start: interval.start,
         end: interval.end ?? new Date(), // Use current date if end is null
-      } as const)
+      }) as const
   ) as T[];
 
   // Sort intervals by their start date
@@ -89,4 +89,15 @@ export const getElapsedTimeInYears = <T extends Interval>(
     years: rounded,
     rounding: "below",
   } as const;
+};
+
+export const toDisplayDate = (date?: Date): string => {
+  if (!date) {
+    return "Present";
+  }
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+  });
 };

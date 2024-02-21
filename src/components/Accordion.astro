@@ -3,13 +3,11 @@ import chevronUpIcon from "../assets/icons/chevron-up.svg?raw";
 ---
 
 <details class="w-full">
-  <summary class="remove-marker no-toggling">
+  <summary class="remove-marker">
     <header class="flex gap-4 justify-between items-center">
       <slot name="header" />
 
-      <div
-        class="bg-none border-none toggler text-primary flex gap-2 items-center"
-      >
+      <div class="bg-none border-none text-primary flex gap-2 items-center">
         <span>Show more</span>
         <div class="max-w-[20px] chevron-icon">
           <Fragment set:html={chevronUpIcon} />
@@ -22,18 +20,14 @@ import chevronUpIcon from "../assets/icons/chevron-up.svg?raw";
 </details>
 
 <style>
+  summary {
+    cursor: pointer;
+  }
   .remove-marker {
     list-style: none;
   }
   .remove-marker::marker {
     display: none;
-  }
-  .no-toggling {
-    pointer-events: none;
-  }
-  .toggler {
-    pointer-events: auto;
-    cursor: pointer;
   }
   details .chevron-icon {
     will-change: transform;
