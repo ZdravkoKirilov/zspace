@@ -1,6 +1,5 @@
-import { z } from "astro:content";
+import { z, reference } from "astro:content";
 import { Weight } from "./_shared";
-import { ProjectId } from "./_project";
 
 export enum WorkId {
   ISG = "isg",
@@ -23,7 +22,9 @@ export const work = z.object({
   from: z.date(),
   to: z.date().optional(),
 
-  projects: z.array(z.nativeEnum(ProjectId)),
+  projects: z.array(reference("projects")),
+  skills: z.array(reference("skills")),
+  tech: z.array(reference("tech")),
 });
 
 export type Work = z.infer<typeof work>;

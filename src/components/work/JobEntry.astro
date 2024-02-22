@@ -1,11 +1,14 @@
 ---
 import resolveConfig from "tailwindcss/resolveConfig";
+import classNames from "classnames";
+import { getEntries } from "astro:content";
 
 import tailwindConfig from "../../../tailwind.config";
-import Accordion from "../Accordion.astro";
 import type { Work } from "../../content/_work";
-import classNames from "classnames";
 import { toDisplayDate } from "../../utils/dates";
+import Accordion from "../Accordion.astro";
+import DecoratedList from "../DecoratedList.astro";
+import { paths } from "../../paths";
 
 type Props = {
   job: Work;
@@ -16,6 +19,26 @@ const primaryColor = resolveConfig(tailwindConfig).theme.colors.primary;
 const itemPadding = resolveConfig(tailwindConfig).theme.space.item;
 
 const { className, job } = Astro.props;
+
+const projects = await getEntries(job.projects).then((entries) => {
+  return entries.map((entry) => ({
+    title: entry.data.display_name,
+    url: paths.projectDetails(entry.data.id),
+  }));
+});
+const tech = await getEntries(job.tech).then((entries) =>
+  entries.map((entry) => ({
+    title: entry.data.display_name,
+    url: paths.techDetails(entry.data.id),
+  }))
+);
+
+const skills = await getEntries(job.skills).then((entries) =>
+  entries.map((entry) => ({
+    title: entry.data.display_name,
+    url: paths.skillDetails(entry.data.id),
+  }))
+);
 ---
 
 <article class="flex gap-8 min-h-[100px]">
@@ -40,7 +63,22 @@ const { className, job } = Astro.props;
             >{job.employer_name}</a
           >
         </h3>
-        <div slot="content" class="mt-12"><slot /></div>
+        <div slot="content" class="mt-10 flex flex-col gap-16">
+          <section class="flex flex-col gap-6">
+            <DecoratedList items={projects}>
+              <h3 slot="header">Projects</h3>
+            </DecoratedList>
+
+            <DecoratedList items={tech}>
+              <h3 slot="header">Technologies</h3>
+            </DecoratedList>
+
+            <DecoratedList items={skills}>
+              <h3 slot="header">Skills</h3>
+            </DecoratedList>
+          </section>
+          <slot />
+        </div>
       </Accordion>
     </div>
   </div>

@@ -1,0 +1,31 @@
+---
+type Item = {
+  title: string;
+  url?: string;
+};
+
+type Props = {
+  items: Item[];
+};
+
+const { items } = Astro.props;
+---
+
+<article class="flex flex-col">
+  <header class="text-xs">
+    <slot name="header" />
+  </header>
+
+  <ul class="list-none m-0 p-0 flex items-center gap-3">
+    {
+      items.map((item, index) => (
+        <li class="flex gap-3 flex-wrap items-center">
+          {index > 0 && <div class="w-[5px] h-[5px] rounded-full bg-primary" />}
+          <a href={item.url} class="underline">
+            {item.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</article>
