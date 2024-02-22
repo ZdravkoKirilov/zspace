@@ -1,4 +1,6 @@
 ---
+import classNames from "classnames";
+
 type Item = {
   title: string;
   url?: string;
@@ -6,9 +8,10 @@ type Item = {
 
 type Props = {
   items: Item[];
+  className?: string;
 };
 
-const { items } = Astro.props;
+const { items, className } = Astro.props;
 ---
 
 <article class="flex flex-col">
@@ -16,14 +19,20 @@ const { items } = Astro.props;
     <slot name="header" />
   </header>
 
-  <ul class="list-none m-0 p-0 flex items-center gap-3">
+  <ul
+    class={classNames("list-none m-0 p-0 flex items-center gap-3", className)}
+  >
     {
       items.map((item, index) => (
         <li class="flex gap-3 flex-wrap items-center">
           {index > 0 && <div class="w-[5px] h-[5px] rounded-full bg-primary" />}
-          <a href={item.url} class="underline">
-            {item.title}
-          </a>
+          {item.url ? (
+            <a href={item.url} class="underline">
+              {item.title}
+            </a>
+          ) : (
+            <span>{item.title}</span>
+          )}
         </li>
       ))
     }

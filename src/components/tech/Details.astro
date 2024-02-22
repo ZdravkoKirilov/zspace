@@ -1,15 +1,106 @@
 ---
+import { Image } from "astro:assets";
+
 import type { Tech } from "../../content/_tech";
 import CraftLayout from "../../layouts/CraftLayout.astro";
+import Accordion from "../../components/Accordion.astro";
+import DecoratedList from "../DecoratedList.astro";
+import { getCollection } from "astro:content";
+import { paths } from "../../paths";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/tech/*.{svg,jpeg,jpg,png,gif}"
+);
 
 type Props = {
   tech: Tech;
 };
 
 const { tech } = Astro.props;
+
+const loadImage = images[tech.image_path];
+
+if (!loadImage) {
+  throw new Error("No image found for " + tech.image_path);
+}
+
+const image = await loadImage();
+
+const projects = await getCollection("projects").then((collection) =>
+  collection.filter((project) => project.data.tech.includes(tech.id))
+);
+
+const learnings = await getCollection("learn").then((collection) =>
+  collection.filter((learning) => learning.data.tech.includes(tech.id))
+);
+
+const summary = [
+  {
+    title: `${tech.years_experience} years`,
+  },
+];
+
+if (projects.length > 0) {
+  const totalProjects = projects.length;
+  summary.push({
+    title: totalProjects === 1 ? "1 project" : `${projects.length} projects`,
+  });
+}
+
+if (learnings.length > 0) {
+  const totalLearnings = learnings.length;
+
+  summary.push({
+    title: totalLearnings === 1 ? "1 course" : `${learnings.length} courses`,
+  });
+}
 ---
 
 <CraftLayout title={tech.display_name}>
-  <div>{tech.display_name}</div>
-  <slot />
+  <article class="flex flex-col gap-12 w-full">
+    <header class="bg-card p-4">
+      <Accordion>
+        <section slot="header" class="flex gap-6 items-center">
+          <Image
+            src={image.default}
+            alt={tech.display_name}
+            class={`max-w-[40px] text-white`}
+          />
+
+          <h1 class="font-bold text-2xl">{tech.display_name}</h1>
+
+          <DecoratedList items={summary} className="text-xs" />
+        </section>
+
+        <section slot="content" class="mt-10 flex flex-col gap-6">
+          {
+            !!projects.length && (
+              <DecoratedList
+                items={projects.map((item) => ({
+                  title: item.data.display_name,
+                  url: paths.projectDetails(item.data.id),
+                }))}
+              >
+                <h2 slot="header">Projects</h2>
+              </DecoratedList>
+            )
+          }
+
+          {
+            !!learnings.length && (
+              <DecoratedList
+                items={learnings.map((item) => ({
+                  title: item.data.display_name,
+                  url: paths.learnDetails(item.data.id),
+                }))}
+              >
+                <h2 slot="header">Courses</h2>
+              </DecoratedList>
+            )
+          }
+        </section>
+      </Accordion>
+    </header>
+    <slot />
+  </article>
 </CraftLayout>
