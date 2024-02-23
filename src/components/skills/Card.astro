@@ -3,13 +3,12 @@ interface Props {
   title: string;
   experience: number;
   projects: number;
-  technologies: number;
+  courses: number;
   url: string;
   className?: string;
 }
 
-const { experience, projects, title, className, technologies, url } =
-  Astro.props;
+const { experience, projects, title, className, courses, url } = Astro.props;
 ---
 
 <div
@@ -24,12 +23,20 @@ const { experience, projects, title, className, technologies, url } =
       <p>
         <span>{experience}</span> years
       </p>
-      <p>
-        <span>{projects}</span> projects
-      </p>
-      <p>
-        <span>{technologies}</span> technologies
-      </p>
+      {
+        !!projects && (
+          <p>
+            <span>{projects}</span> projects
+          </p>
+        )
+      }
+      {
+        !!courses && (
+          <p>
+            <span>{courses}</span> courses
+          </p>
+        )
+      }
     </div>
 
     <p>

@@ -33,9 +33,13 @@ const { experience, projects, title, image, className, url, imageClassName } =
       <p>
         <span>{experience}</span> years
       </p>
-      <p>
-        <span>{projects}</span> projects
-      </p>
+      {
+        !!projects && (
+          <p>
+            <span>{projects}</span> projects
+          </p>
+        )
+      }
     </div>
 
     <p>

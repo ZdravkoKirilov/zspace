@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntries } from "astro:content";
 
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import Card from "./Card.astro";
@@ -15,15 +15,17 @@ const projectsList = await getCollection("projects").then((items) =>
   <main class="grow">
     <CardsList>
       {
-        projectsList.map(async (learn) => {
+        projectsList.map(async (project) => {
+          const skills = await getEntries(project.data.skills);
+          const tech = await getEntries(project.data.tech);
+
           return (
             <li class="flex">
               <Card
-                title={learn.data.display_name}
-                experience={7}
-                skills={6}
-                technologies={2}
-                url={paths.projectDetails(learn.data.id)}
+                title={project.data.display_name}
+                skills={skills.length}
+                technologies={tech.length}
+                url={paths.projectDetails(project.data.id)}
                 className="grow"
               />
             </li>

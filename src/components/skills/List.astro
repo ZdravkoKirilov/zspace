@@ -16,13 +16,25 @@ const skillsList = await getCollection("skills").then((items) =>
     <CardsList>
       {
         skillsList.map(async (skill) => {
+          const projects = await getCollection("projects").then((items) =>
+            items.filter((project) =>
+              project.data.skills.includes(skill.data.id)
+            )
+          );
+
+          const learnings = await getCollection("learn").then((items) =>
+            items.filter((learning) =>
+              learning.data.skills.includes(skill.data.id)
+            )
+          );
+
           return (
             <li class="flex">
               <Card
                 title={skill.data.display_name}
-                experience={7}
-                projects={6}
-                technologies={2}
+                experience={skill.data.years_experience}
+                projects={projects.length}
+                courses={learnings.length}
                 url={paths.skillDetails(skill.data.id)}
                 className="grow"
               />

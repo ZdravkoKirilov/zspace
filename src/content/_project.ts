@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z, reference } from "astro:content";
 
 import { Weight } from "./_shared";
 import { TechId } from "./_tech";
@@ -49,8 +49,8 @@ export const project = z.object({
   demo_url: z.string().url().optional(),
   image: z.string().url().optional(),
 
-  tech: z.array(z.nativeEnum(TechId)),
-  skills: z.array(z.nativeEnum(SkillId)),
+  tech: z.array(reference("tech")),
+  skills: z.array(reference("skills")),
 });
 
 export type Project = z.infer<typeof project>;

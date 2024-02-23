@@ -1,15 +1,78 @@
 ---
-import { Project } from "../../content/_project";
 import CraftLayout from "../../layouts/CraftLayout.astro";
+import Accordion from "../../components/Accordion.astro";
+import DecoratedList from "../DecoratedList.astro";
+import { getEntries } from "astro:content";
+import { paths } from "../../paths";
+import type { Project } from "../../content/_project";
 
 type Props = {
   project: Project;
 };
 
 const { project } = Astro.props;
+
+const skills = await getEntries(project.skills);
+const tech = await getEntries(project.tech);
+
+const summary = [];
+
+if (skills.length > 0) {
+  const total = skills.length;
+
+  summary.push({
+    title: total === 1 ? "1 skill" : `${total} skills`,
+  });
+}
+
+if (tech.length > 0) {
+  const total = tech.length;
+
+  summary.push({
+    title: total === 1 ? "1 technology" : `${total} technologies`,
+  });
+}
 ---
 
 <CraftLayout title={project.display_name}>
-  <div>{project.display_name}</div>
-  <slot />
+  <article class="flex flex-col gap-12 w-full">
+    <header class="bg-card p-4 rounded">
+      <Accordion>
+        <section slot="header" class="flex gap-6 items-center">
+          <h1 class="font-bold text-2xl">{project.display_name}</h1>
+
+          <DecoratedList items={summary} className="text-xs" />
+        </section>
+
+        <section slot="content" class="mt-10 flex flex-col gap-6">
+          {
+            !!skills.length && (
+              <DecoratedList
+                items={skills.map((item) => ({
+                  title: item.data.display_name,
+                  url: paths.skillDetails(item.data.id),
+                }))}
+              >
+                <h2>Projects</h2>
+              </DecoratedList>
+            )
+          }
+
+          {
+            !!tech.length && (
+              <DecoratedList
+                items={tech.map((item) => ({
+                  title: item.data.display_name,
+                  url: paths.techDetails(item.data.id),
+                }))}
+              >
+                <h2>Courses</h2>
+              </DecoratedList>
+            )
+          }
+        </section>
+      </Accordion>
+    </header>
+    <slot />
+  </article>
 </CraftLayout>

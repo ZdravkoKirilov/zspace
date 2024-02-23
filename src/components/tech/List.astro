@@ -29,13 +29,17 @@ const techList = await getCollection("tech").then((items) =>
           }
           const image = await loadImage();
 
+          const projects = await getCollection("projects").then((items) =>
+            items.filter((item) => item.data.tech.includes(tech.data.id))
+          );
+
           return (
             <li class="flex">
               <Card
                 title={tech.data.display_name}
                 image={image.default}
-                experience={7}
-                projects={6}
+                experience={tech.data.years_experience}
+                projects={projects.length}
                 url={paths.techDetails(tech.data.id)}
                 className="grow"
                 imageClassName={classNames({
