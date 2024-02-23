@@ -14,17 +14,17 @@ type Props = {
 const { items, className } = Astro.props;
 ---
 
-<article class="flex flex-col">
-  <header class="text-xs">
-    <slot name="header" />
-  </header>
+<article class="flex flex-col gap-2">
+  {Astro.slots.has('default') && <header>
+    <slot />
+  </header>}
 
   <ul
     class={classNames("list-none m-0 p-0 flex items-center gap-3", className)}
   >
     {
       items.map((item, index) => (
-        <li class="flex gap-3 flex-wrap items-center">
+        <li class="flex gap-3 flex-wrap items-center text-xs">
           {index > 0 && <div class="w-[5px] h-[5px] rounded-full bg-primary" />}
           {item.url ? (
             <a href={item.url} class="underline">
