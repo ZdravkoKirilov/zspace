@@ -1,33 +1,38 @@
 ---
 interface Props {
   title: string;
-  experience: number;
-  projects: number;
-  technologies: number;
+  tech: number;
+  skills: number;
   url: string;
   className?: string;
 }
 
-const { experience, projects, title, className, technologies, url } =
-  Astro.props;
+const { skills, title, className, tech, url } = Astro.props;
 ---
 
-<div class=`bg-card rounded p-4 flex flex-col gap-6 justify-between ${className}`>
+<div
+  class=`bg-card rounded p-4 flex flex-col gap-6 justify-between ${className}`
+>
   <header>
     <h2 class="font-bold text-xl">{title}</h2>
   </header>
 
   <div class="flex flex-col gap-4 text-sm">
     <div>
-      <p>
-        <span>{experience}</span> years
-      </p>
-      <p>
-        <span>{projects}</span> projects
-      </p>
-      <p>
-        <span>{technologies}</span> technologies
-      </p>
+      {
+        !!skills && (
+          <p>
+            <span>{skills}</span> skills
+          </p>
+        )
+      }
+      {
+        !!tech && (
+          <p>
+            <span>{tech}</span> technologies
+          </p>
+        )
+      }
     </div>
 
     <p>

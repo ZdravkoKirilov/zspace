@@ -4,6 +4,7 @@ import Accordion from "../../components/Accordion.astro";
 import DecoratedList from "../DecoratedList.astro";
 import { getEntries } from "astro:content";
 import { paths } from "../../paths";
+import { toDisplayDate, toShortDate } from "../../utils/dates";
 import type { Project } from "../../content/_project";
 
 type Props = {
@@ -39,12 +40,31 @@ if (tech.length > 0) {
     <header class="bg-card p-4 rounded">
       <Accordion>
         <section slot="header" class="flex gap-6 items-center">
-          <h1 class="font-bold text-2xl">{project.display_name}</h1>
+          {
+            project.url ? (
+              <a class="underline" href={project.url} target="_blank">
+                <h1>{project.display_name}</h1>
+              </a>
+            ) : (
+              <h1 class="font-bold ">{project.display_name}</h1>
+            )
+          }
 
           <DecoratedList items={summary} className="text-xs" />
         </section>
 
         <section slot="content" class="mt-10 flex flex-col gap-6">
+          <section class="text-sm">
+            <time datetime={toShortDate(project.from)}
+              >{toDisplayDate(project.from)}</time
+            >
+            <span> -</span>
+
+            <time datetime={toShortDate(project.from)}>
+              {toDisplayDate(project.to)}
+            </time>
+          </section>
+
           {
             !!skills.length && (
               <DecoratedList

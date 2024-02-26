@@ -46,8 +46,7 @@ export const project = z.object({
   from: z.date(),
   to: z.date().optional(),
 
-  demo_url: z.string().url().optional(),
-  image: z.string().url().optional(),
+  url: z.string().url().optional(),
 
   tech: z.array(reference("tech")),
   skills: z.array(reference("skills")),

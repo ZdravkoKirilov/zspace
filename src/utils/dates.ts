@@ -101,3 +101,5 @@ export const toDisplayDate = (date?: Date): string => {
     month: "long",
   });
 };
+
+export const toShortDate = (date: Date) => date.toISOString().slice(0, 10);

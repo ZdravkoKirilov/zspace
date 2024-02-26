@@ -1,8 +1,6 @@
-import { z } from "astro:content";
+import { reference, z } from "astro:content";
 
 import { Weight } from "./_shared";
-import { SkillId } from "./_skill";
-import { TechId } from "./_tech";
 
 export enum LearnId {
   OAuthCourse = "oauth",
@@ -18,8 +16,8 @@ export const learn = z.object({
   weight: z.nativeEnum(Weight),
   order: z.number().int(),
 
-  skills: z.array(z.nativeEnum(SkillId)),
-  tech: z.array(z.nativeEnum(TechId)),
+  skills: z.array(reference("skills")),
+  tech: z.array(reference("tech")),
 });
 
 export type Learn = z.infer<typeof learn>;
