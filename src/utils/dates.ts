@@ -61,11 +61,11 @@ function calculateTotalElapsedTime(intervals: Interval[]): number {
   }, 0);
 }
 
-type RelativeResult = { years: number; rounding: "below" | "above" | "exact" };
+export type TotalYears = { years: number; rounding: "below" | "above" | "exact" };
 
 export const getElapsedTimeInYears = <T extends Interval>(
   intervals: T[]
-): RelativeResult => {
+): TotalYears => {
   const years =
     calculateTotalElapsedTime(intervals) / (1000 * 60 * 60 * 24 * 365);
   const rounded = Math.round(years);

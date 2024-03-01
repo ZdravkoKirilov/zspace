@@ -2,10 +2,12 @@
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
+import type { TotalYears } from "../../utils/dates";
+
 interface Props {
   title: string;
   image: ImageMetadata;
-  experience: number;
+  experience: TotalYears;
   projects: number;
   learnings: number;
   className?: string;
@@ -40,7 +42,7 @@ const {
   <div class="flex flex-col gap-4 text-sm">
     <div>
       <p>
-        <span>{experience}</span> years
+        <span>{experience.years}</span> years
       </p>
       {
         !!projects && (

@@ -1,11 +1,12 @@
 ---
 import { getCollection } from "astro:content";
+import classNames from "classnames";
 
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
-import classNames from "classnames";
+import { getElapsedTimeInYears } from "../../utils/dates";
 import { TechId } from "../../content/_tech";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -41,12 +42,16 @@ const techList = await getCollection("tech").then((items) =>
             )
           );
 
+          const experience = getElapsedTimeInYears(
+            projects.map((p) => ({ start: p.data.from, end: p.data.to }))
+          );
+
           return (
             <li class="flex">
               <Card
                 title={tech.data.display_name}
                 image={image.default}
-                experience={tech.data.years_experience}
+                experience={experience}
                 projects={projects.length}
                 learnings={learnings.length}
                 url={paths.techDetails(tech.data.id)}

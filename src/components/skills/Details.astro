@@ -5,6 +5,7 @@ import DecoratedList from "../DecoratedList.astro";
 import { getCollection } from "astro:content";
 import { paths } from "../../paths";
 import type { Skill } from "../../content/_skill";
+import { getElapsedTimeInYears } from "../../utils/dates";
 
 type Props = {
   skill: Skill;
@@ -13,16 +14,24 @@ type Props = {
 const { skill } = Astro.props;
 
 const projects = await getCollection("projects").then((collection) =>
-  collection.filter((project) => project.data.skills.includes(skill.id))
+  collection.filter((project) =>
+    project.data.skills.some((item) => item.slug === skill.id)
+  )
 );
 
 const learnings = await getCollection("learn").then((collection) =>
-  collection.filter((learning) => learning.data.skills.includes(skill.id))
+  collection.filter((learning) =>
+    learning.data.skills.some((item) => item.slug === skill.id)
+  )
+);
+
+const experience = getElapsedTimeInYears(
+  projects.map((p) => ({ start: p.data.from, end: p.data.to }))
 );
 
 const summary = [
   {
-    title: `${skill.years_experience} years`,
+    title: `${experience.years} years`,
   },
 ];
 

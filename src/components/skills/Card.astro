@@ -1,7 +1,9 @@
 ---
+import type { TotalYears } from "../../utils/dates";
+
 interface Props {
   title: string;
-  experience: number;
+  experience: TotalYears;
   projects: number;
   courses: number;
   url: string;
@@ -21,7 +23,7 @@ const { experience, projects, title, className, courses, url } = Astro.props;
   <div class="flex flex-col gap-4 text-sm">
     <div>
       <p>
-        <span>{experience}</span> years
+        <span>{experience.years}</span> years
       </p>
       {
         !!projects && (

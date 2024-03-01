@@ -26,8 +26,6 @@ export const skill = z.object({
   display_name: z.string(),
   weight: z.nativeEnum(Weight),
   order: z.number().int(),
-
-  years_experience: z.number().int(),
 });
 
 export type Skill = z.infer<typeof skill>;

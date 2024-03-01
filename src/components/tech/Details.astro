@@ -1,12 +1,13 @@
 ---
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
 import type { Tech } from "../../content/_tech";
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import Accordion from "../../components/Accordion.astro";
 import DecoratedList from "../DecoratedList.astro";
-import { getCollection } from "astro:content";
 import { paths } from "../../paths";
+import { getElapsedTimeInYears } from "../../utils/dates";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/tech/*.{svg,jpeg,jpg,png,gif}"
@@ -38,9 +39,13 @@ const learnings = await getCollection("learn").then((collection) =>
   )
 );
 
+const experience = getElapsedTimeInYears(
+  projects.map((p) => ({ start: p.data.from, end: p.data.to }))
+);
+
 const summary = [
   {
-    title: `${tech.years_experience} years`,
+    title: `${experience.years} years`,
   },
 ];
 

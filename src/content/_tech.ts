@@ -32,8 +32,6 @@ export const tech = z.object({
   weight: z.nativeEnum(Weight),
   order: z.number().int(),
   image_path: z.string(),
-
-  years_experience: z.number().int(),
 });
 
 export type Tech = z.infer<typeof tech>;
