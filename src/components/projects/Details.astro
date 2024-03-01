@@ -1,8 +1,10 @@
 ---
+import { getEntries } from "astro:content";
+
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import Accordion from "../../components/Accordion.astro";
 import DecoratedList from "../DecoratedList.astro";
-import { getEntries } from "astro:content";
+
 import { paths } from "../../paths";
 import { toDisplayDate, toShortDate } from "../../utils/dates";
 import type { Project } from "../../content/_project";
