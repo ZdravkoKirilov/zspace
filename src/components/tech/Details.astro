@@ -27,11 +27,15 @@ if (!loadImage) {
 const image = await loadImage();
 
 const projects = await getCollection("projects").then((collection) =>
-  collection.filter((project) => project.data.tech.includes(tech.id))
+  collection.filter((project) =>
+    project.data.tech.some(({ slug }) => slug === tech.id)
+  )
 );
 
 const learnings = await getCollection("learn").then((collection) =>
-  collection.filter((learning) => learning.data.tech.includes(tech.id))
+  collection.filter((learning) =>
+    learning.data.tech.some(({ slug }) => slug === tech.id)
+  )
 );
 
 const summary = [

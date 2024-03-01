@@ -14,7 +14,7 @@ type Props = {
 const { items, className } = Astro.props;
 ---
 
-<article class="flex flex-col gap-2">
+<article class="flex flex-col gap-1">
   {Astro.slots.has('default') && <header>
     <slot />
   </header>}

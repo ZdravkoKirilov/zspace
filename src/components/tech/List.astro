@@ -30,7 +30,15 @@ const techList = await getCollection("tech").then((items) =>
           const image = await loadImage();
 
           const projects = await getCollection("projects").then((items) =>
-            items.filter((item) => item.data.tech.includes(tech.data.id))
+            items.filter((item) =>
+              item.data.tech.some(({ slug }) => slug === tech.data.id)
+            )
+          );
+
+          const learnings = await getCollection("learn").then((items) =>
+            items.filter((item) =>
+              item.data.tech.some(({ slug }) => slug === tech.data.id)
+            )
           );
 
           return (
@@ -40,6 +48,7 @@ const techList = await getCollection("tech").then((items) =>
                 image={image.default}
                 experience={tech.data.years_experience}
                 projects={projects.length}
+                learnings={learnings.length}
                 url={paths.techDetails(tech.data.id)}
                 className="grow"
                 imageClassName={classNames({

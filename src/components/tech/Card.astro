@@ -7,13 +7,22 @@ interface Props {
   image: ImageMetadata;
   experience: number;
   projects: number;
+  learnings: number;
   className?: string;
   imageClassName?: string;
   url: string;
 }
 
-const { experience, projects, title, image, className, url, imageClassName } =
-  Astro.props;
+const {
+  experience,
+  projects,
+  title,
+  image,
+  className,
+  url,
+  imageClassName,
+  learnings,
+} = Astro.props;
 ---
 
 <div
@@ -37,6 +46,13 @@ const { experience, projects, title, image, className, url, imageClassName } =
         !!projects && (
           <p>
             <span>{projects}</span> projects
+          </p>
+        )
+      }
+      {
+        !!learnings && (
+          <p>
+            <span>{learnings}</span> courses
           </p>
         )
       }
