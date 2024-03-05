@@ -15,6 +15,7 @@ const { learn } = Astro.props;
 
 const skills = await getEntries(learn.skills);
 const tech = await getEntries(learn.tech);
+const projects = await getEntries(learn.projects);
 
 const summary = [];
 
@@ -31,6 +32,14 @@ if (tech.length > 0) {
 
   summary.push({
     title: total === 1 ? "1 technology" : `${total} technologies`,
+  });
+}
+
+if (projects.length > 0) {
+  const total = projects.length;
+
+  summary.push({
+    title: total === 1 ? "1 project" : `${total} projects`,
   });
 }
 ---
@@ -68,6 +77,19 @@ if (tech.length > 0) {
                 }))}
               >
                 <h2>Skills</h2>
+              </DecoratedList>
+            )
+          }
+
+          {
+            !!projects.length && (
+              <DecoratedList
+                items={projects.map((item) => ({
+                  title: item.data.display_name,
+                  url: paths.projectDetails(item.data.id),
+                }))}
+              >
+                <h2>Projects</h2>
               </DecoratedList>
             )
           }

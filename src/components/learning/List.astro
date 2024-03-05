@@ -18,6 +18,7 @@ const learningList = await getCollection("learn").then((items) =>
         learningList.map(async (learn) => {
           const skills = await getEntries(learn.data.skills);
           const tech = await getEntries(learn.data.tech);
+          const projects = await getEntries(learn.data.projects);
 
           return (
             <li class="flex">
@@ -25,6 +26,7 @@ const learningList = await getCollection("learn").then((items) =>
                 title={learn.data.display_name}
                 skills={skills.length}
                 tech={tech.length}
+                projects={projects.length}
                 url={paths.learnDetails(learn.data.id)}
                 className="grow"
               />

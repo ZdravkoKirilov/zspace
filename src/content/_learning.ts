@@ -16,8 +16,12 @@ export const learn = z.object({
   weight: z.nativeEnum(Weight),
   order: z.number().int(),
 
+  from: z.date(),
+  to: z.date().optional(),
+
   skills: z.array(reference("skills")),
   tech: z.array(reference("tech")),
+  projects: z.array(reference("projects")),
 });
 
 export type Learn = z.infer<typeof learn>;

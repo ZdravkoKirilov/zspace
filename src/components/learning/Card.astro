@@ -3,11 +3,12 @@ interface Props {
   title: string;
   tech: number;
   skills: number;
+  projects: number;
   url: string;
   className?: string;
 }
 
-const { skills, title, className, tech, url } = Astro.props;
+const { skills, projects, title, className, tech, url } = Astro.props;
 ---
 
 <div
@@ -30,6 +31,13 @@ const { skills, title, className, tech, url } = Astro.props;
         !!tech && (
           <p>
             <span>{tech}</span> technologies
+          </p>
+        )
+      }
+      {
+        !!projects && (
+          <p>
+            <span>{tech}</span> projects
           </p>
         )
       }
