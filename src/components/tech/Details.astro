@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
 import type { Tech } from "../../content/_tech";
@@ -9,23 +8,11 @@ import DecoratedList from "../DecoratedList.astro";
 import { paths } from "../../paths";
 import { getElapsedTimeInYears } from "../../utils/dates";
 
-const images = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/tech/*.{svg,jpeg,jpg,png,gif}"
-);
-
 type Props = {
   tech: Tech;
 };
 
 const { tech } = Astro.props;
-
-const loadImage = images[tech.image_path];
-
-if (!loadImage) {
-  throw new Error("No image found for " + tech.image_path);
-}
-
-const image = await loadImage();
 
 const projects = await getCollection("projects").then((collection) =>
   collection.filter((project) =>
@@ -69,18 +56,10 @@ if (learnings.length > 0) {
   <article class="flex flex-col gap-12 w-full">
     <header class="bg-card p-4 rounded">
       <Accordion>
-        <section slot="header" class="flex gap-6 items-start">
-          <Image
-            src={image.default}
-            alt={tech.display_name}
-            class={`max-w-[40px] text-white`}
-          />
+        <section slot="header" class="flex gap-6 items-baseline">
+          <h1 class="font-bold text-2xl">{tech.display_name}</h1>
 
-          <div class="flex gap-6 items-baseline">
-            <h1 class="font-bold text-2xl">{tech.display_name}</h1>
-
-            <DecoratedList items={summary} className="text-xs" />
-          </div>
+          <DecoratedList items={summary} className="text-xs" />
         </section>
 
         <section slot="content" class="mt-10 flex flex-col gap-6">

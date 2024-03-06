@@ -1,17 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import classNames from "classnames";
 
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
 import { getElapsedTimeInYears } from "../../utils/dates";
-import { TechId } from "../../content/_tech";
-
-const images = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/tech/*.{svg,jpeg,jpg,png,gif}"
-);
 
 const techList = await getCollection("tech").then((items) =>
   items.sort((a, b) => a.data.order - b.data.order)
@@ -23,13 +17,6 @@ const techList = await getCollection("tech").then((items) =>
     <CardsList>
       {
         techList.map(async (tech) => {
-          const loadImage = images[tech.data.image_path];
-
-          if (!loadImage) {
-            throw new Error("No image found for " + tech.data.image_path);
-          }
-          const image = await loadImage();
-
           const projects = await getCollection("projects").then((items) =>
             items.filter((item) =>
               item.data.tech.some(({ slug }) => slug === tech.data.id)
@@ -50,15 +37,11 @@ const techList = await getCollection("tech").then((items) =>
             <li class="flex">
               <Card
                 title={tech.data.display_name}
-                image={image.default}
                 experience={experience}
                 projects={projects.length}
                 learnings={learnings.length}
                 url={paths.techDetails(tech.data.id)}
                 className="grow"
-                imageClassName={classNames({
-                  "max-w-[35px]": tech.data.id === TechId.MongoDB,
-                })}
               />
             </li>
           );

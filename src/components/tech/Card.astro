@@ -1,41 +1,22 @@
 ---
-import type { ImageMetadata } from "astro";
-import { Image } from "astro:assets";
-
 import type { TotalYears } from "../../utils/dates";
 
 interface Props {
   title: string;
-  image: ImageMetadata;
   experience: TotalYears;
   projects: number;
   learnings: number;
   className?: string;
-  imageClassName?: string;
   url: string;
 }
 
-const {
-  experience,
-  projects,
-  title,
-  image,
-  className,
-  url,
-  imageClassName,
-  learnings,
-} = Astro.props;
+const { experience, projects, title, className, url, learnings } = Astro.props;
 ---
 
 <div
   class=`bg-card p-4 flex flex-col gap-6 justify-between rounded ${className}`
 >
-  <header class="flex flex-row gap-6">
-    <Image
-      src={image}
-      alt={title}
-      class={`max-w-[50px] text-white ${imageClassName}`}
-    />
+  <header>
     <h2 class="font-bold text-xl">{title}</h2>
   </header>
 
