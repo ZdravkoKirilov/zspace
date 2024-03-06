@@ -1,0 +1,23 @@
+---
+export type Item = {
+  count: number;
+  forms: [string, string];
+};
+
+type Props = {
+  items: Item[];
+};
+
+const { items } = Astro.props;
+
+const formattedItems = items
+  .filter((item) => item.count > 0)
+  .map((item) => {
+    const { count, forms } = item;
+    const [singular, plural] = forms;
+    const form = count === 1 ? singular : plural;
+    return { title: `${count} ${form}` };
+  });
+---
+
+{formattedItems.map((item) => <p>{item.title}</p>)}

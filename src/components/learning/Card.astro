@@ -1,4 +1,6 @@
 ---
+import Summary, { type Item } from "../Summary.astro";
+
 interface Props {
   title: string;
   tech: number;
@@ -9,6 +11,21 @@ interface Props {
 }
 
 const { skills, projects, title, className, tech, url } = Astro.props;
+
+const relatedItems: Item[] = [
+  {
+    count: skills,
+    forms: ["skill", "skills"],
+  },
+  {
+    count: tech,
+    forms: ["technology", "technologies"],
+  },
+  {
+    count: projects,
+    forms: ["project", "projects"],
+  },
+];
 ---
 
 <div
@@ -20,27 +37,7 @@ const { skills, projects, title, className, tech, url } = Astro.props;
 
   <div class="flex flex-col gap-4 text-sm">
     <div>
-      {
-        !!skills && (
-          <p>
-            <span>{skills}</span> skills
-          </p>
-        )
-      }
-      {
-        !!tech && (
-          <p>
-            <span>{tech}</span> technologies
-          </p>
-        )
-      }
-      {
-        !!projects && (
-          <p>
-            <span>{tech}</span> projects
-          </p>
-        )
-      }
+      <Summary items={relatedItems} />
     </div>
 
     <p>
