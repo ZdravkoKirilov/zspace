@@ -1,0 +1,23 @@
+---
+import { toDisplayDate, toShortDate } from "../utils/dates";
+
+type Props = {
+  from: Date;
+  to?: Date | undefined;
+};
+
+const { from, to } = Astro.props;
+---
+
+<section class="text-sm">
+  <time datetime={toShortDate(from)}>{toDisplayDate(from)}</time>
+  <span> -</span>
+
+  {
+    to ? (
+      <time datetime={toShortDate(to)}>{toDisplayDate(to)}</time>
+    ) : (
+      <span>{toDisplayDate()}</span>
+    )
+  }
+</section>

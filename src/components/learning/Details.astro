@@ -2,11 +2,12 @@
 import { getEntries } from "astro:content";
 
 import Accordion from "../../components/Accordion.astro";
-import DecoratedList from "../DecoratedList.astro";
+import DecoratedSummary from "../DecoratedSummary.astro";
+import OptionalDecoratedList from "../OptionalDecoratedList.astro";
+import TimeBoundary from "../TimeBoundary.astro";
 import type { Learn } from "../../content/_learning";
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import { paths } from "../../paths";
-import { toDisplayDate, toShortDate } from "../../utils/dates";
 import AccordionContent from "../../components/AccordionContent.astro";
 
 type Props = {
@@ -18,32 +19,6 @@ const { learn } = Astro.props;
 const skills = await getEntries(learn.skills);
 const tech = await getEntries(learn.tech);
 const projects = await getEntries(learn.projects);
-
-const summary = [];
-
-if (skills.length > 0) {
-  const total = skills.length;
-
-  summary.push({
-    title: total === 1 ? "1 skill" : `${total} skills`,
-  });
-}
-
-if (tech.length > 0) {
-  const total = tech.length;
-
-  summary.push({
-    title: total === 1 ? "1 technology" : `${total} technologies`,
-  });
-}
-
-if (projects.length > 0) {
-  const total = projects.length;
-
-  summary.push({
-    title: total === 1 ? "1 project" : `${total} projects`,
-  });
-}
 ---
 
 <CraftLayout title={learn.display_name}>
@@ -51,62 +26,56 @@ if (projects.length > 0) {
     <header class="bg-card p-4 rounded">
       <Accordion>
         <section slot="header" class="flex gap-6 items-baseline">
-          <h1 class="font-bold text-2xl">{learn.display_name}</h1>
+          <h1 class="font-bold text-xl">{learn.display_name}</h1>
 
-          <DecoratedList items={summary} className="text-xs" />
+          <DecoratedSummary
+            items={[
+              {
+                count: skills.length,
+                forms: ["skill", "skills"],
+              },
+              {
+                count: tech.length,
+                forms: ["technology", "technologies"],
+              },
+              {
+                count: projects.length,
+                forms: ["project", "projects"],
+              },
+            ]}
+          />
         </section>
 
         <section slot="content" class="mt-10">
           <AccordionContent>
-            <section class="text-sm">
-              <time datetime={toShortDate(learn.from)}
-                >{toDisplayDate(learn.from)}</time
-              >
-              <span> -</span>
+            <TimeBoundary from={learn.from} to={learn.to} />
 
-              <time datetime={toShortDate(learn.from)}>
-                {toDisplayDate(learn.to)}
-              </time>
-            </section>
+            <OptionalDecoratedList
+              items={tech.map((item) => ({
+                title: item.data.display_name,
+                url: paths.techDetails(item.data.id),
+              }))}
+            >
+              Technologies
+            </OptionalDecoratedList>
 
-            {
-              !!tech.length && (
-                <DecoratedList
-                  items={tech.map((item) => ({
-                    title: item.data.display_name,
-                    url: paths.techDetails(item.data.id),
-                  }))}
-                >
-                  <h2>Technologies</h2>
-                </DecoratedList>
-              )
-            }
+            <OptionalDecoratedList
+              items={skills.map((item) => ({
+                title: item.data.display_name,
+                url: paths.skillDetails(item.data.id),
+              }))}
+            >
+              Skills
+            </OptionalDecoratedList>
 
-            {
-              !!skills.length && (
-                <DecoratedList
-                  items={skills.map((item) => ({
-                    title: item.data.display_name,
-                    url: paths.skillDetails(item.data.id),
-                  }))}
-                >
-                  <h2>Skills</h2>
-                </DecoratedList>
-              )
-            }
-
-            {
-              !!projects.length && (
-                <DecoratedList
-                  items={projects.map((item) => ({
-                    title: item.data.display_name,
-                    url: paths.projectDetails(item.data.id),
-                  }))}
-                >
-                  <h2>Projects</h2>
-                </DecoratedList>
-              )
-            }
+            <OptionalDecoratedList
+              items={projects.map((item) => ({
+                title: item.data.display_name,
+                url: paths.projectDetails(item.data.id),
+              }))}
+            >
+              Projects
+            </OptionalDecoratedList>
           </AccordionContent>
         </section>
       </Accordion>

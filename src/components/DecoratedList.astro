@@ -4,9 +4,10 @@ import classNames from "classnames";
 type Item = {
   title: string;
   url?: string;
+  labelId?: string;
 };
 
-type Props = {
+export type Props = {
   items: Item[];
   className?: string;
 };
