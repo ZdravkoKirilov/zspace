@@ -1,4 +1,8 @@
 ---
+import CardContent from "../CardContent.astro";
+import CardCta from "../CardCta.astro";
+import VerticalSummary from "../VerticalSummary.astro";
+
 interface Props {
   title: string;
   skills: number;
@@ -17,28 +21,26 @@ const { skills, title, className, technologies, url } = Astro.props;
     <h2 class="font-bold text-xl">{title}</h2>
   </header>
 
-  <div class="flex flex-col gap-4 text-sm">
+  <CardContent>
     <div>
-      {
-        !!skills && (
-          <p>
-            <span>{skills}</span> skills
-          </p>
-        )
-      }
-      {
-        !!technologies && (
-          <p>
-            <span>{technologies}</span> technologies
-          </p>
-        )
-      }
+      <VerticalSummary
+        items={[
+          {
+            count: skills,
+            forms: ["skill", "skills"],
+          },
+          {
+            count: technologies,
+            forms: ["technology", "technologies"],
+          },
+        ]}
+      />
     </div>
 
     <p>
-      <a class="underline text-primary text-xs" href={url}>Learn more</a>
+      <CardCta url={url} />
     </p>
-  </div>
+  </CardContent>
 </div>
 
 <style></style>

@@ -9,6 +9,8 @@ import { toDisplayDate } from "../../utils/dates";
 import Accordion from "../Accordion.astro";
 import DecoratedList from "../DecoratedList.astro";
 import { paths } from "../../paths";
+import OptionalDecoratedList from "../OptionalDecoratedList.astro";
+import AccordionContent from "../AccordionContent.astro";
 
 type Props = {
   job: Work;
@@ -64,19 +66,20 @@ const skills = await getEntries(job.skills).then((entries) =>
           >
         </h3>
         <div slot="content" class="mt-10 flex flex-col gap-16">
-          <section class="flex flex-col gap-6">
-            <DecoratedList items={projects}>
-              <h3>Projects</h3>
-            </DecoratedList>
+          <AccordionContent>
+            <OptionalDecoratedList items={projects}>
+              Projects
+            </OptionalDecoratedList>
 
-            <DecoratedList items={tech}>
+            <OptionalDecoratedList items={tech}>
               <h3>Technologies</h3>
-            </DecoratedList>
+            </OptionalDecoratedList>
 
-            <DecoratedList items={skills}>
+            <OptionalDecoratedList items={skills}>
               <h3>Skills</h3>
-            </DecoratedList>
-          </section>
+            </OptionalDecoratedList>
+          </AccordionContent>
+
           <slot />
         </div>
       </Accordion>

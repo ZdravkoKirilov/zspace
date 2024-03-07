@@ -1,5 +1,8 @@
 ---
 import type { TotalYears } from "../../utils/dates";
+import CardContent from "../CardContent.astro";
+import CardCta from "../CardCta.astro";
+import VerticalSummary from "../VerticalSummary.astro";
 
 interface Props {
   title: string;
@@ -20,31 +23,30 @@ const { experience, projects, title, className, courses, url } = Astro.props;
     <h2 class="font-bold text-xl">{title}</h2>
   </header>
 
-  <div class="flex flex-col gap-4 text-sm">
+  <CardContent>
     <div>
-      <p>
-        <span>{experience.years}</span> years
-      </p>
-      {
-        !!projects && (
-          <p>
-            <span>{projects}</span> projects
-          </p>
-        )
-      }
-      {
-        !!courses && (
-          <p>
-            <span>{courses}</span> courses
-          </p>
-        )
-      }
+      <VerticalSummary
+        items={[
+          {
+            count: experience.years,
+            forms: ["year", "years"],
+          },
+          {
+            count: projects,
+            forms: ["project", "projects"],
+          },
+          {
+            count: courses,
+            forms: ["course", "courses"],
+          },
+        ]}
+      />
     </div>
 
     <p>
-      <a class="underline text-primary text-xs" href={url}>Learn more</a>
+      <CardCta url={url} />
     </p>
-  </div>
+  </CardContent>
 </div>
 
 <style></style>

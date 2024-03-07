@@ -3,11 +3,13 @@ import { getEntries } from "astro:content";
 
 import CraftLayout from "../../layouts/CraftLayout.astro";
 import Accordion from "../../components/Accordion.astro";
-import DecoratedList from "../DecoratedList.astro";
 
 import { paths } from "../../paths";
-import { toDisplayDate, toShortDate } from "../../utils/dates";
 import type { Project } from "../../content/_project";
+import DecoratedSummary from "../DecoratedSummary.astro";
+import AccordionContent from "../AccordionContent.astro";
+import TimeBoundary from "../TimeBoundary.astro";
+import OptionalDecoratedList from "../OptionalDecoratedList.astro";
 
 type Props = {
   project: Project;
@@ -17,24 +19,6 @@ const { project } = Astro.props;
 
 const skills = await getEntries(project.skills);
 const tech = await getEntries(project.tech);
-
-const summary = [];
-
-if (skills.length > 0) {
-  const total = skills.length;
-
-  summary.push({
-    title: total === 1 ? "1 skill" : `${total} skills`,
-  });
-}
-
-if (tech.length > 0) {
-  const total = tech.length;
-
-  summary.push({
-    title: total === 1 ? "1 technology" : `${total} technologies`,
-  });
-}
 ---
 
 <CraftLayout title={project.display_name}>
@@ -45,53 +29,49 @@ if (tech.length > 0) {
           {
             project.url ? (
               <a class="underline" href={project.url} target="_blank">
-                <h1>{project.display_name}</h1>
+                <h1 class="font-bold text-xl">{project.display_name}</h1>
               </a>
             ) : (
-              <h1 class="font-bold ">{project.display_name}</h1>
+              <h1 class="font-bold text-xl">{project.display_name}</h1>
             )
           }
 
-          <DecoratedList items={summary} className="text-xs" />
+          <DecoratedSummary
+            items={[
+              {
+                count: skills.length,
+                forms: ["skill", "skills"],
+              },
+              {
+                count: tech.length,
+                forms: ["technology", "technologies"],
+              },
+            ]}
+          />
         </section>
 
-        <section slot="content" class="mt-10 flex flex-col gap-10">
-          <section class="text-sm">
-            <time datetime={toShortDate(project.from)}
-              >{toDisplayDate(project.from)}</time
+        <section slot="content" class="mt-10">
+          <AccordionContent>
+            <TimeBoundary from={project.from} to={project.to} />
+
+            <OptionalDecoratedList
+              items={skills.map((item) => ({
+                title: item.data.display_name,
+                url: paths.skillDetails(item.data.id),
+              }))}
             >
-            <span> -</span>
+              Skills
+            </OptionalDecoratedList>
 
-            <time datetime={toShortDate(project.from)}>
-              {toDisplayDate(project.to)}
-            </time>
-          </section>
-
-          {
-            !!skills.length && (
-              <DecoratedList
-                items={skills.map((item) => ({
-                  title: item.data.display_name,
-                  url: paths.skillDetails(item.data.id),
-                }))}
-              >
-                <h2>Projects</h2>
-              </DecoratedList>
-            )
-          }
-
-          {
-            !!tech.length && (
-              <DecoratedList
-                items={tech.map((item) => ({
-                  title: item.data.display_name,
-                  url: paths.techDetails(item.data.id),
-                }))}
-              >
-                <h2>Courses</h2>
-              </DecoratedList>
-            )
-          }
+            <OptionalDecoratedList
+              items={tech.map((item) => ({
+                title: item.data.display_name,
+                url: paths.techDetails(item.data.id),
+              }))}
+            >
+              Technologies
+            </OptionalDecoratedList>
+          </AccordionContent>
         </section>
       </Accordion>
     </header>
