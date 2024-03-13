@@ -16,6 +16,7 @@ export const post = z.object({
   display_name: z.string(),
   type: z.nativeEnum(PostType),
   tags: z.array(z.string()),
+  featured_image: z.string().optional(),
 
   created_on: z.date(),
 });

@@ -1,17 +1,26 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
+import { Image } from "astro:assets";
 
-import { Post } from "../../content/_blog-post";
+import MainLayout from "../../layouts/MainLayout.astro";
+import type { Post } from "../../content/_blog-post";
 
 type Props = {
   post: Post;
 };
 
 const { post } = Astro.props;
+const basePath = "../../assets/blog-images";
+
+const images = import.meta.glob("../../assets/blog-images/*");
+const loadImage = post.featured_image
+  ? images[`${basePath}/${post.featured_image}`]
+  : undefined;
+const image = loadImage && (loadImage() as Promise<{ default: ImageMetadata }>);
 ---
 
 <MainLayout title={post.display_name}>
   <article>
+    {image && <Image src={image} alt="Featured image" class="max-w-[50%]" />}
     <slot />
   </article>
 </MainLayout>
