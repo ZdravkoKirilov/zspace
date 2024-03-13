@@ -1,0 +1,17 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+
+import { Post } from "../../content/_blog-post";
+
+type Props = {
+  post: Post;
+};
+
+const { post } = Astro.props;
+---
+
+<MainLayout title={post.display_name}>
+  <article>
+    <slot />
+  </article>
+</MainLayout>

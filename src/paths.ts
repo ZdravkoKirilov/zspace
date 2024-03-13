@@ -23,7 +23,7 @@ export const paths = {
   workDetails: (id: WorkId) => `/craft/work/${id}`,
   learnDetails: (id: LearnId) => `/craft/learn/${id}`,
 
-  post: (id: PostId) => `/blog/posts/${id}`,
+  post: (id: PostId) => `/blog/${id}`,
 } as const;
 
 type TopPath =
