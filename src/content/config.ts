@@ -5,6 +5,7 @@ import { skill } from "./_skill";
 import { project } from "./_project";
 import { learn } from "./_learning";
 import { work } from "./_work";
+import { post } from "./_blog-post";
 
 const techCollection = defineCollection({
   type: "content",
@@ -31,10 +32,16 @@ const workCollection = defineCollection({
   schema: work,
 });
 
+const postsCollection = defineCollection({
+  type: "content",
+  schema: post,
+});
+
 export const collections = {
   tech: techCollection,
   skills: skillsCollection,
   projects: projectsCollection,
   learn: learningCollection,
   work: workCollection,
+  posts: postsCollection,
 };

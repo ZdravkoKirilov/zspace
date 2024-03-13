@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+
+import Item from "./Item.astro";
+
+const posts = await getCollection("posts").then((posts) =>
+  posts.sort(
+    (a, b) => a.data.created_on.getTime() - b.data.created_on.getTime()
+  )
+);
+---
+
+<ul>
+  {
+    posts.map(async (post, index) => {
+      return (
+        <li>
+          <Item post={post.data} className={index === 0 ? "border-t-2" : ""} />
+        </li>
+      );
+    })
+  }
+</ul>

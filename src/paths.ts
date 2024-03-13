@@ -1,3 +1,4 @@
+import type { PostId } from "./content/_blog-post";
 import type { LearnId } from "./content/_learning";
 import type { ProjectId } from "./content/_project";
 import type { SkillId } from "./content/_skill";
@@ -21,6 +22,8 @@ export const paths = {
   projectDetails: (id: ProjectId) => `/craft/projects/${id}`,
   workDetails: (id: WorkId) => `/craft/work/${id}`,
   learnDetails: (id: LearnId) => `/craft/learn/${id}`,
+
+  post: (id: PostId) => `/blog/posts/${id}`,
 } as const;
 
 type TopPath =
