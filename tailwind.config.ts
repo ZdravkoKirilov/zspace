@@ -26,6 +26,9 @@ export default {
         list: "2rem",
         item: "2rem",
       },
+      maxWidth: {
+        articles: "90ch",
+      },
     },
   },
   plugins: [],

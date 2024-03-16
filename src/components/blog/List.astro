@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 
 import Item from "./Item.astro";
+import { calculateReadTime } from "../../utils/read-time";
 
 const posts = await getCollection("posts").then((posts) =>
   posts.sort(
@@ -13,9 +14,15 @@ const posts = await getCollection("posts").then((posts) =>
 <ul>
   {
     posts.map(async (post, index) => {
+      const estimate = calculateReadTime(post.body);
+
       return (
         <li>
-          <Item post={post.data} className={index === 0 ? "border-t-2" : ""} />
+          <Item
+            post={post.data}
+            className={index === 0 ? "border-t-2" : ""}
+            readTime={estimate.humanizedDuration}
+          />
         </li>
       );
     })

@@ -8,10 +8,11 @@ import { toDisplayDate } from "../../utils/dates";
 
 interface Props {
   post: Post;
+  readTime: string;
   className?: string;
 }
 
-const { post, className } = Astro.props;
+const { post, className, readTime } = Astro.props;
 
 const tags = post.tags.map((tag) => ({
   title: tag,
@@ -29,12 +30,12 @@ const tags = post.tags.map((tag) => ({
       <a href={paths.post(post.id)} class="underline">
         <h2>{post.display_name}</h2>
       </a>
-      <DecoratedList items={tags} gapSize="small"/>
+      <DecoratedList items={tags} gapSize="small" />
     </div>
 
     <div class="flex flex-col gap-4 text-sm items-end">
       <span>{toDisplayDate(post.created_on)}</span>
-      <span>3 minute read</span>
+      <span>{readTime}</span>
     </div>
   </div>
 </div>

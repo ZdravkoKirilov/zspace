@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 
+import { calculateReadTime } from "../../utils/read-time";
 import PostDetails from "../../components/blog/Details.astro";
 
 export async function getStaticPaths() {
@@ -15,8 +16,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 
 const { Content } = await entry.render();
+
+const estimate = calculateReadTime(entry.body);
 ---
 
-<PostDetails post={entry.data}>
+<PostDetails post={entry.data} readTime={estimate.humanizedDuration}>
   <Content />
 </PostDetails>
