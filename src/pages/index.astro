@@ -1,21 +1,35 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+import Layout from "../layouts/MainLayout.astro";
+
+import Heart from "../assets/heart.svg";
+import Hero from "../assets/hero.jpg";
+import { paths } from "../paths";
 ---
 
 <Layout title="Welcome to Astro.">
-  <main>
-    <h1>Welcome to my site!</h1>
+  <div class="flex flex-col gap-20 serif">
+    <div class="flex flex-row gap-20">
+      <div class="flex flex-col gap-20 mt-8">
+        <h1 class="text-hero">Hey I'm Z</h1>
+        <span class="text-center">...and</span>
+      </div>
+      <span>
+        <Image src={Hero} alt="Hero image" />
+      </span>
+    </div>
 
-    <nav>
-      <ul>
-        <li><a href="/about">About me</a></li>
-        <li><a href="/bio">Bio</a></li>
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/learning">Now learning</a></li>
-        <li><a href="/blog">Thoughts</a></li>
-      </ul>
-    </nav>
-  </main>
+    <div class="flex flex-row flex-wrap gap-8 items-center tracking-wide">
+      <p class="text-headline">I</p>
+      <Image src={Heart} alt="Heart" class="w-32" />
+      <p class="text-headline">
+        <a class="bold underline text-primary mr-4" href={paths.craft}
+          >crafting</a
+        > products for the web.
+      </p>
+    </div>
+  </div>
 </Layout>
 
 <style></style>

@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+
+import MainLayout from "../../layouts/MainLayout.astro";
+import type { Post } from "../../content/_blog-post";
+import DecoratedList from "../DecoratedList.astro";
+import { toDisplayDate } from "../../utils/dates";
+
+type Props = {
+  post: Post;
+  readTime: string;
+};
+
+const { post, readTime } = Astro.props;
+const basePath = "../../assets/blog-images";
+
+const images = import.meta.glob("../../assets/blog-images/*");
+const loadImage = post.featured_image
+  ? images[`${basePath}/${post.featured_image}`]
+  : undefined;
+const image = loadImage && (loadImage() as Promise<{ default: ImageMetadata }>);
+---
+
+<MainLayout title={post.display_name}>
+  <article class="flex flex-col gap-12 max-w-articles">
+    <header class="flex flex-col gap-6">
+      <h1 class="text-3xl">{post.display_name}</h1>
+      <DecoratedList
+        items={[
+          { title: post.tags.join(", ") },
+          { title: readTime },
+          { title: toDisplayDate(post.created_on) },
+        ]}
+      />
+    </header>
+    {image && <Image src={image} alt="Featured image" class="max-w-[50%]" />}
+    <slot />
+  </article>
+</MainLayout>

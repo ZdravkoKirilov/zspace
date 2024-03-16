@@ -1,0 +1,62 @@
+---
+import cx from "classnames";
+import { paths, isTopPathActive } from "../paths.ts";
+
+const pathname = new URL(Astro.request.url).pathname;
+---
+
+<nav>
+  <ul class="flex flex-row text-nav gap-nav serif">
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.home) })}>
+      <div class="px-2">
+        <a href={paths.home}>Home</a>
+      </div>
+
+      <div
+        class={isTopPathActive(pathname, paths.home)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
+      </div>
+    </li>
+
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.craft) })}>
+      <div class="px-2">
+        <a href={paths.craft}>My craft</a>
+      </div>
+
+      <div
+        class={isTopPathActive(pathname, paths.craft)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
+      </div>
+    </li>
+
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.about) })}>
+      <div class="px-2">
+        <a href={paths.about}>About me</a>
+      </div>
+
+      <div
+        class={isTopPathActive(pathname, paths.about)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
+      </div>
+    </li>
+
+    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.blog) })}>
+      <div class="px-2">
+        <a href={paths.blog}>Blog</a>
+      </div>
+
+      <div
+        class={isTopPathActive(pathname, paths.blog)
+          ? "h-0.5 w-full bg-primary"
+          : ""}
+      >
+      </div>
+    </li>
+  </ul>
+</nav>

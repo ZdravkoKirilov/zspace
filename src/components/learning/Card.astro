@@ -1,0 +1,51 @@
+---
+import VerticalSummary, { type Item } from "../VerticalSummary.astro";
+import CardCta from "../CardCta.astro";
+import CardContent from "../CardContent.astro";
+
+interface Props {
+  title: string;
+  tech: number;
+  skills: number;
+  projects: number;
+  url: string;
+  className?: string;
+}
+
+const { skills, projects, title, className, tech, url } = Astro.props;
+
+const relatedItems: Item[] = [
+  {
+    count: skills,
+    forms: ["skill", "skills"],
+  },
+  {
+    count: tech,
+    forms: ["technology", "technologies"],
+  },
+  {
+    count: projects,
+    forms: ["project", "projects"],
+  },
+];
+---
+
+<div
+  class=`bg-card rounded p-4 flex flex-col gap-6 justify-between ${className}`
+>
+  <header>
+    <h2 class="font-bold text-xl">{title}</h2>
+  </header>
+
+  <CardContent>
+    <div>
+      <VerticalSummary items={relatedItems} />
+    </div>
+
+    <p>
+      <CardCta url={url} />
+    </p>
+  </CardContent>
+</div>
+
+<style></style>

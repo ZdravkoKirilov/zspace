@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+
+import LearnDetails from "../../../components/learning/Details.astro";
+
+export async function getStaticPaths() {
+  const tech = await getCollection("learn");
+
+  return tech.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const { Content } = await entry.render();
+---
+
+<LearnDetails learn={entry.data}>
+  <Content />
+</LearnDetails>

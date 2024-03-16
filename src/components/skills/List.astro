@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import Card from "./Card.astro";
+import { paths } from "../../paths";
+import CardsList from "../CardsList.astro";
+import { getElapsedTimeInYears } from "../../utils/dates";
+
+const skillsList = await getCollection("skills").then((items) =>
+  items.sort((a, b) => a.data.order - b.data.order)
+);
+---
+
+<CraftLayout title="Skills">
+  <main class="grow">
+    <CardsList>
+      {
+        skillsList.map(async (skill) => {
+          const projects = await getCollection("projects").then((items) =>
+            items.filter((project) =>
+              project.data.skills.some((item) => item.slug === skill.data.id)
+            )
+          );
+
+          const learnings = await getCollection("learn").then((items) =>
+            items.filter((learning) =>
+              learning.data.skills.some((item) => item.slug === skill.data.id)
+            )
+          );
+
+          const experience = getElapsedTimeInYears(
+            projects.map((item) => ({
+              start: item.data.from,
+              end: item.data.to,
+            }))
+          );
+
+          return (
+            <li class="flex">
+              <Card
+                title={skill.data.display_name}
+                experience={experience}
+                projects={projects.length}
+                courses={learnings.length}
+                url={paths.skillDetails(skill.data.id)}
+                className="grow"
+              />
+            </li>
+          );
+        })
+      }
+    </CardsList>
+  </main>
+</CraftLayout>

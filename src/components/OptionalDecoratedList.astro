@@ -1,0 +1,26 @@
+---
+import DecoratedList, { type Props as ListProps } from "./DecoratedList.astro";
+
+type Props = ListProps;
+
+const { items } = Astro.props;
+---
+
+{
+  !!items.length && (
+    <figure>
+      <DecoratedList
+        items={items.map((item) => ({
+          title: item.title,
+          url: item.url ?? "",
+        }))}
+      >
+        <figcaption>
+          <h2>
+            <slot />
+          </h2>
+        </figcaption>
+      </DecoratedList>
+    </figure>
+  )
+}

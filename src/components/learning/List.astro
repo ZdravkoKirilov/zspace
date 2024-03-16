@@ -1,0 +1,39 @@
+---
+import { getCollection, getEntries } from "astro:content";
+
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import Card from "./Card.astro";
+import { paths } from "../../paths";
+import CardsList from "../CardsList.astro";
+
+const learningList = await getCollection("learn").then((items) =>
+  items.sort((a, b) => a.data.order - b.data.order)
+);
+---
+
+<CraftLayout title="Learnings">
+  <main class="grow">
+    <CardsList>
+      {
+        learningList.map(async (learn) => {
+          const skills = await getEntries(learn.data.skills);
+          const tech = await getEntries(learn.data.tech);
+          const projects = await getEntries(learn.data.projects);
+
+          return (
+            <li class="flex">
+              <Card
+                title={learn.data.display_name}
+                skills={skills.length}
+                tech={tech.length}
+                projects={projects.length}
+                url={paths.learnDetails(learn.data.id)}
+                className="grow"
+              />
+            </li>
+          );
+        })
+      }
+    </CardsList>
+  </main>
+</CraftLayout>

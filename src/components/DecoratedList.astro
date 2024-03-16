@@ -1,0 +1,54 @@
+---
+import classNames from "classnames";
+
+type Item = {
+  title: string;
+  url?: string;
+  labelId?: string;
+};
+
+export type Props = {
+  items: Item[];
+  gapSize?: "normal" | "small";
+  className?: string;
+};
+
+const { items, className, gapSize = "normal" } = Astro.props;
+---
+
+<article class="flex flex-col gap-1">
+  {
+    Astro.slots.has("default") && (
+      <header>
+        <slot />
+      </header>
+    )
+  }
+
+  <ul
+    class={classNames("list-none m-0 p-0 flex items-center", className, {
+      "gap-3": gapSize === "normal",
+      "gap-2": gapSize === "small",
+    })}
+  >
+    {
+      items.map((item, index) => (
+        <li
+          class={classNames("flex flex-wrap items-center text-xs", {
+            "gap-3": gapSize === "normal",
+            "gap-2": gapSize === "small",
+          })}
+        >
+          {index > 0 && <div class="w-[5px] h-[5px] rounded-full bg-primary" />}
+          {item.url ? (
+            <a href={item.url} class="underline">
+              {item.title}
+            </a>
+          ) : (
+            <span>{item.title}</span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</article>

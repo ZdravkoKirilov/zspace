@@ -1,12 +1,44 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../layouts/MainLayout.astro";
+import About from "./about.mdx";
+import SwissKnife from "../../assets/swiss_knife.svg?raw";
+import DecoratedList from "../../components/DecoratedList.astro";
+
+const socials = [
+  {
+    title: "GitHub",
+    url: "https://github.com",
+  },
+  {
+    title: "LinkedIn",
+    url: "https://urledin.com",
+  },
+  {
+    title: "zdravkovasilchevkirilov@gmail.com",
+    url: "mailto:zdravkovasilchevkirilov@gmail.com",
+  },
+];
 ---
 
 <Layout title="About me">
-  <main>
-    <h1>About me</h1>
+  <main class="flex flex-col gap-16">
+    <header class="flex items-start gap-12">
+      <div class="text-primary w-[150px]">
+        <Fragment set:html={SwissKnife} />
+      </div>
 
-    <article>Stuff about me</article>
+      <section class="flex flex-col gap-8">
+        <h2 class="text-xl font-bold">
+          I'm Zdravko, a Software Engineer from Bulgaria.
+        </h2>
+
+        <DecoratedList items={socials} />
+      </section>
+    </header>
+
+    <article class="grow leading-loose max-w-articles">
+      <About />
+    </article>
   </main>
 </Layout>
 

@@ -1,0 +1,99 @@
+---
+import resolveConfig from "tailwindcss/resolveConfig";
+import classNames from "classnames";
+import { getEntries } from "astro:content";
+
+import tailwindConfig from "../../../tailwind.config";
+import type { Work } from "../../content/_work";
+import { toDisplayDate } from "../../utils/dates";
+import Accordion from "../Accordion.astro";
+import { paths } from "../../paths";
+import OptionalDecoratedList from "../OptionalDecoratedList.astro";
+import AccordionContent from "../AccordionContent.astro";
+
+type Props = {
+  job: Work;
+  className?: string;
+};
+
+const primaryColor = resolveConfig(tailwindConfig).theme.colors.primary;
+const itemPadding = resolveConfig(tailwindConfig).theme.space.item;
+
+const { className, job } = Astro.props;
+
+const projects = await getEntries(job.projects).then((entries) => {
+  return entries.map((entry) => ({
+    title: entry.data.display_name,
+    url: paths.projectDetails(entry.data.id),
+  }));
+});
+const tech = await getEntries(job.tech).then((entries) =>
+  entries.map((entry) => ({
+    title: entry.data.display_name,
+    url: paths.techDetails(entry.data.id),
+  }))
+);
+
+const skills = await getEntries(job.skills).then((entries) =>
+  entries.map((entry) => ({
+    title: entry.data.display_name,
+    url: paths.skillDetails(entry.data.id),
+  }))
+);
+---
+
+<article class="flex gap-8 min-h-[100px]">
+  <div class="zs-job-decoration relative pt-item pb-item">
+    <div class="w-[30px] h-[30px] rounded-full bg-primary"></div>
+  </div>
+
+  <div
+    class={classNames(
+      "pt-item pb-item border-b-2 border-card border-solid grow items-center",
+      className
+    )}
+  >
+    <div class="flex flex-col gap-1">
+      <header class="flex items-center justify-between flex-wrap gap-2">
+        <h2 class="text-xl font-bold">{job.display_name}</h2>
+        <time>{toDisplayDate(job.from)} - {toDisplayDate(job.to)}</time>
+      </header>
+      <Accordion>
+        <h3 slot="header">
+          <a href={job.employer_url} target="_blank" class="underline"
+            >{job.employer_name}</a
+          >
+        </h3>
+        <div slot="content" class="mt-10 flex flex-col gap-16">
+          <AccordionContent>
+            <OptionalDecoratedList items={projects}>
+              Projects
+            </OptionalDecoratedList>
+
+            <OptionalDecoratedList items={tech}>
+              <h3>Technologies</h3>
+            </OptionalDecoratedList>
+
+            <OptionalDecoratedList items={skills}>
+              <h3>Skills</h3>
+            </OptionalDecoratedList>
+          </AccordionContent>
+
+          <slot />
+        </div>
+      </Accordion>
+    </div>
+  </div>
+</article>
+
+<style define:vars={{ primaryColor, itemPadding }}>
+  .zs-job-decoration::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 1.5px);
+    width: 3px;
+    background-color: var(--primaryColor);
+  }
+</style>

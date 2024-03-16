@@ -1,0 +1,20 @@
+---
+import resolveConfig from "tailwindcss/resolveConfig";
+
+import tailwindConfig from "../../tailwind.config";
+
+const listGap = resolveConfig(tailwindConfig).theme.spacing.list;
+---
+
+<ul class="zs-grid list-none m-0">
+  <slot />
+</ul>
+
+<style define:vars={{ listGap }}>
+  .zs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 1fr;
+    grid-gap: var(--listGap);
+  }
+</style>

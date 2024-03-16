@@ -1,12 +1,25 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../../layouts/MainLayout.astro";
+
+import CodeIcon from "../../assets/code.svg?raw";
+import PostsList from "../../components/blog/List.astro";
 ---
 
 <Layout title="Articles">
-  <main>
-    <h1>Articles</h1>
+  <main class="flex flex-col gap-8">
+    <header class="flex items-start gap-12">
+      <div class="text-primary w-[150px] -mt-[20px]">
+        <Fragment set:html={CodeIcon} />
+      </div>
 
-    <article>Blog articles</article>
+      <section class="flex flex-col gap-8">
+        <h2 class="text-xl font-bold tracking-wide">
+          Welcome to my blog where I talk about technology.
+        </h2>
+      </section>
+    </header>
+
+    <PostsList />
   </main>
 </Layout>
 

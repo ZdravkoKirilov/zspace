@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import Card from "./Card.astro";
+import { paths } from "../../paths";
+import CardsList from "../CardsList.astro";
+import { getElapsedTimeInYears } from "../../utils/dates";
+
+const techList = await getCollection("tech").then((items) =>
+  items.sort((a, b) => a.data.order - b.data.order)
+);
+---
+
+<CraftLayout title="Technologies">
+  <main class="grow">
+    <CardsList>
+      {
+        techList.map(async (tech) => {
+          const projects = await getCollection("projects").then((items) =>
+            items.filter((item) =>
+              item.data.tech.some(({ slug }) => slug === tech.data.id)
+            )
+          );
+
+          const learnings = await getCollection("learn").then((items) =>
+            items.filter((item) =>
+              item.data.tech.some(({ slug }) => slug === tech.data.id)
+            )
+          );
+
+          const experience = getElapsedTimeInYears(
+            projects.map((p) => ({ start: p.data.from, end: p.data.to }))
+          );
+
+          return (
+            <li class="flex">
+              <Card
+                title={tech.data.display_name}
+                experience={experience}
+                projects={projects.length}
+                learnings={learnings.length}
+                url={paths.techDetails(tech.data.id)}
+                className="grow"
+              />
+            </li>
+          );
+        })
+      }
+    </CardsList>
+  </main>
+</CraftLayout>

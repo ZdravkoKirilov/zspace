@@ -1,0 +1,85 @@
+---
+import { getEntries } from "astro:content";
+
+import Accordion from "../../components/Accordion.astro";
+import DecoratedSummary from "../DecoratedSummary.astro";
+import OptionalDecoratedList from "../OptionalDecoratedList.astro";
+import TimeBoundary from "../TimeBoundary.astro";
+import type { Learn } from "../../content/_learning";
+import CraftLayout from "../../layouts/CraftLayout.astro";
+import { paths } from "../../paths";
+import AccordionContent from "../../components/AccordionContent.astro";
+
+type Props = {
+  learn: Learn;
+};
+
+const { learn } = Astro.props;
+
+const skills = await getEntries(learn.skills);
+const tech = await getEntries(learn.tech);
+const projects = await getEntries(learn.projects);
+---
+
+<CraftLayout title={learn.display_name}>
+  <article class="flex flex-col gap-12 w-full">
+    <header class="bg-card p-4 rounded">
+      <Accordion>
+        <section slot="header" class="flex gap-6 items-baseline">
+          <h1 class="font-bold text-xl">{learn.display_name}</h1>
+
+          <DecoratedSummary
+            items={[
+              {
+                count: skills.length,
+                forms: ["skill", "skills"],
+              },
+              {
+                count: tech.length,
+                forms: ["technology", "technologies"],
+              },
+              {
+                count: projects.length,
+                forms: ["project", "projects"],
+              },
+            ]}
+          />
+        </section>
+
+        <section slot="content" class="mt-10">
+          <AccordionContent>
+            <TimeBoundary from={learn.from} to={learn.to} />
+
+            <OptionalDecoratedList
+              items={tech.map((item) => ({
+                title: item.data.display_name,
+                url: paths.techDetails(item.data.id),
+              }))}
+            >
+              Technologies
+            </OptionalDecoratedList>
+
+            <OptionalDecoratedList
+              items={skills.map((item) => ({
+                title: item.data.display_name,
+                url: paths.skillDetails(item.data.id),
+              }))}
+            >
+              Skills
+            </OptionalDecoratedList>
+
+            <OptionalDecoratedList
+              items={projects.map((item) => ({
+                title: item.data.display_name,
+                url: paths.projectDetails(item.data.id),
+              }))}
+            >
+              Projects
+            </OptionalDecoratedList>
+          </AccordionContent>
+        </section>
+      </Accordion>
+    </header>
+    <slot />
+  </article>
+</CraftLayout>
