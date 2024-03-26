@@ -6,7 +6,9 @@ const pathname = new URL(Astro.request.url).pathname;
 ---
 
 <nav>
-  <ul class="flex flex-row text-nav gap-nav serif">
+  <ul
+    class="flex flex-row flex-wrap text-nav gap-nav serif"
+  >
     <li class={cx({ "text-primary": isTopPathActive(pathname, paths.home) })}>
       <div class="px-2">
         <a href={paths.home}>Home</a>

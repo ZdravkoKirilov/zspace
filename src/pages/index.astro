@@ -8,19 +8,21 @@ import Hero from "../assets/hero.jpg";
 import { paths } from "../paths";
 ---
 
-<Layout title="Welcome to Astro.">
-  <div class="flex flex-col gap-20 serif">
-    <div class="flex flex-row gap-20">
-      <div class="flex flex-col gap-20 mt-8">
+<Layout title="Welcome to ZSpace.">
+  <div class="flex flex-col gap-8 sm:gap-20 serif">
+    <div class="flex flex-row gap-8 sm:gap-20 justify-center sm:justify-start">
+      <div class="flex flex-col gap-8 sm:gap-20">
         <h1 class="text-hero">Hey I'm Z</h1>
         <span class="text-center">...and</span>
       </div>
-      <span>
+      <span class="hidden sm:block">
         <Image src={Hero} alt="Hero image" />
       </span>
     </div>
 
-    <div class="flex flex-row flex-wrap gap-8 items-center tracking-wide">
+    <div
+      class="flex flex-row flex-wrap gap-8 items-center tracking-wide justify-center sm:justify-start"
+    >
       <p class="text-headline">I</p>
       <Image src={Heart} alt="Heart" class="w-32" />
       <p class="text-headline">
