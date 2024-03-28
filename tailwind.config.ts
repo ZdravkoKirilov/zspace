@@ -16,6 +16,8 @@ export default {
       },
       fontSize: {
         nav: "clamp(1rem, 1.3vw, 2rem)",
+        "nav-mobile": "clamp(2rem, 1.6vw, 3rem)",
+        "side-nav-mobile": "clamp(1.3rem, 1.5vw, 2.5rem)",
         "side-nav": "clamp(0.8rem, 1vw, 1.5rem)",
         hero: "clamp(2rem, 8vw, 8rem)",
         headline: "clamp(1.3rem, 2vw, 3rem)",

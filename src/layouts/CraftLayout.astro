@@ -1,10 +1,12 @@
 ---
-import "../styles/global.css";
+import CombinedNavigation from "../components/CombinedNavigation.astro";
 import MainNavigation from "../components/MainNavigation.astro";
 import SideNavigation from "../components/SideNavigation.astro";
-interface Props {
+import "../styles/global.css";
+
+type Props = {
   title: string;
-}
+};
 
 const { title } = Astro.props;
 ---
@@ -28,12 +30,29 @@ const { title } = Astro.props;
 
   <body class="p-12 text-default bg-background container mx-auto">
     <main>
-      <header>
+      <aside
+        class="mobile-nav flex flex-col sm:hidden fixed left-0 top-0 right-0 z-10 bg-card p-4 shadow-md"
+      >
+        <button
+          class="self-end bg-none border-default border border-solid rounded px-4 py-2 text-default cursor-pointer active:text-white zs-hidden zs-button"
+          >Close</button
+        >
+        <button
+          class="self-end bg-none border-default border border-solid rounded px-4 py-2 text-default cursor-pointer active:text-white zs-button"
+          >Menu</button
+        >
+
+        <div class="zs-slided-out zs-nav">
+          <CombinedNavigation />
+        </div>
+      </aside>
+
+      <header class="hidden sm:block">
         <MainNavigation />
       </header>
 
-      <div class="flex flex-row gap-20 mt-24">
-        <aside>
+      <div class="flex flex-row gap-20 mt-20 sm:mt-12">
+        <aside class="hidden sm:block">
           <SideNavigation />
         </aside>
 
@@ -42,3 +61,33 @@ const { title } = Astro.props;
     </main>
   </body>
 </html>
+
+<style>
+  .zs-nav {
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+    transform: translateX(0);
+  }
+  .zs-slided-out {
+    height: 0;
+    transform: translateX(calc(-100%));
+  }
+  .zs-hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  function toggleClasses() {
+    const buttons = document.querySelectorAll(".zs-button");
+    const nav = document.querySelector(".zs-nav");
+
+    buttons.forEach((elem) => elem.classList.toggle("zs-hidden"));
+    nav?.classList.toggle("zs-slided-out");
+  }
+
+  document
+    .querySelectorAll(".zs-button")
+    .forEach((btn) => btn.addEventListener("click", toggleClasses));
+</script>
