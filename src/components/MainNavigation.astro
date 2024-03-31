@@ -1,65 +1,16 @@
 ---
-import cx from "classnames";
-
-import { paths, isTopPathActive } from "../paths";
-
-const pathname = new URL(Astro.request.url).pathname;
+import { paths } from "../paths";
+import NavLink from "./NavLink.astro";
 ---
 
 <nav>
-  <ul
-    class="flex flex-row flex-wrap text-nav gap-nav serif"
-  >
-    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.home) })}>
-      <div class="px-2">
-        <a href={paths.home}>Home</a>
-      </div>
+  <ul class="flex flex-row flex-wrap text-nav gap-nav serif">
+    <NavLink type="top" path={paths.home}>Home</NavLink>
 
-      <div
-        class={isTopPathActive(pathname, paths.home)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
+    <NavLink type="top" path={paths.craft}>My craft</NavLink>
 
-    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.craft) })}>
-      <div class="px-2">
-        <a href={paths.craft}>My craft</a>
-      </div>
+    <NavLink type="top" path={paths.about}>About me</NavLink>
 
-      <div
-        class={isTopPathActive(pathname, paths.craft)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.about) })}>
-      <div class="px-2">
-        <a href={paths.about}>About me</a>
-      </div>
-
-      <div
-        class={isTopPathActive(pathname, paths.about)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.blog) })}>
-      <div class="px-2">
-        <a href={paths.blog}>Blog</a>
-      </div>
-
-      <div
-        class={isTopPathActive(pathname, paths.blog)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
+    <NavLink type="top" path={paths.blog}>Blog</NavLink>
   </ul>
 </nav>

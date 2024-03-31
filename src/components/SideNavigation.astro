@@ -1,95 +1,14 @@
 ---
-import cx from "classnames";
-import { isCraftPathActive, paths } from "../paths";
-
-const pathname = new URL(Astro.request.url).pathname;
+import { paths } from "../paths";
+import NavLink from "./NavLink.astro";
 ---
 
 <nav>
   <ul class="flex flex-col text-side-nav gap-side-nav pl-2">
-    <li
-      class={cx("self-start", {
-        "text-primary": isCraftPathActive(pathname, paths.skills),
-      })}
-    >
-      <div class="pr-2">
-        <a href={paths.skills}>Skills</a>
-      </div>
-
-      <div
-        class={isCraftPathActive(pathname, paths.skills)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li
-      class={cx("self-start", {
-        "text-primary": isCraftPathActive(pathname, paths.technologies),
-      })}
-    >
-      <div class="pr-2">
-        <a href={paths.technologies}>Tech</a>
-      </div>
-
-      <div
-        class={isCraftPathActive(pathname, paths.technologies)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li
-      class={cx("self-start", {
-        "text-primary": isCraftPathActive(pathname, paths.projects),
-      })}
-    >
-      <div class="pr-2">
-        <a href={paths.projects}>Projects</a>
-      </div>
-
-      <div
-        class={isCraftPathActive(pathname, paths.projects)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li
-      class={cx("self-start", {
-        "text-primary": isCraftPathActive(pathname, paths.learn),
-      })}
-    >
-      <div class="pr-2">
-        <a href={paths.learn}>Learning</a>
-      </div>
-
-      <div
-        class={isCraftPathActive(pathname, paths.learn)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li
-      class={cx("self-start", {
-        "text-primary": isCraftPathActive(pathname, paths.work),
-      })}
-    >
-      <div class="pr-2">
-        <a href={paths.work}>Work</a>
-      </div>
-
-      <div
-        class={isCraftPathActive(pathname, paths.work)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
+    <NavLink type="craft" path={paths.skills}>Skills</NavLink>
+    <NavLink type="craft" path={paths.technologies}>Tech</NavLink>
+    <NavLink type="craft" path={paths.projects}>Projects</NavLink>
+    <NavLink type="craft" path={paths.learn}>Learning</NavLink>
+    <NavLink type="craft" path={paths.work}>Work</NavLink>
   </ul>
 </nav>

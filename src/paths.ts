@@ -26,7 +26,7 @@ export const paths = {
   post: (id: PostId) => `/blog/${id}`,
 } as const;
 
-type TopPath =
+export type TopPath =
   | typeof paths.home
   | typeof paths.about
   | typeof paths.blog
@@ -39,7 +39,7 @@ export const isTopPathActive = (pathname: string, path: TopPath) => {
   return currentPath === pathWithoutSlash;
 };
 
-type CraftPath =
+export type CraftPath =
   | typeof paths.skills
   | typeof paths.technologies
   | typeof paths.projects

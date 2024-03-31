@@ -1,0 +1,46 @@
+---
+import cx from "classnames";
+import {
+  isTopPathActive,
+  isCraftPathActive,
+  type TopPath,
+  type CraftPath,
+} from "../paths";
+
+type Props =
+  | {
+      type: "top";
+      path: TopPath;
+      center?: undefined;
+    }
+  | { type: "craft"; path: CraftPath; center?: boolean };
+
+const pathname = new URL(Astro.request.url).pathname;
+const { type, path, center } = Astro.props;
+
+const isActive =
+  type === "top"
+    ? isTopPathActive(pathname, path)
+    : isCraftPathActive(pathname, path);
+---
+
+<li
+  class={cx({
+    "text-primary": isActive,
+    "self-center": center,
+    "self-start": !center,
+  })}
+>
+  <div class="px-2">
+    <a href={path}><slot /></a>
+  </div>
+
+  <div
+    class={cx({
+      "h-0.5 w-full bg-primary": isActive,
+    })}
+  >
+  </div>
+
+  <slot name="subnav" />
+</li>

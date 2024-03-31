@@ -1,157 +1,30 @@
 ---
-import cx from "classnames";
-import { paths, isTopPathActive, isCraftPathActive } from "../paths";
-
-const pathname = new URL(Astro.request.url).pathname;
+import NavLink from "./NavLink.astro";
+import { paths } from "../paths";
 ---
 
 <nav class="h-[100%]">
   <ul
     class="flex flex-col text-nav-mobile gap-nav serif items-center p-4 h-[100%]"
   >
-    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.home) })}>
-      <div class="px-2">
-        <a href={paths.home}>Home</a>
-      </div>
+    <NavLink type="top" path={paths.home}>Home</NavLink>
 
-      <div
-        class={isTopPathActive(pathname, paths.home)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li>
-      <div
-        class={cx("px-2", {
-          "text-primary": isTopPathActive(pathname, paths.craft),
-        })}
-      >
-        <a href={paths.craft}>My craft</a>
-      </div>
-
-      <div
-        class={isTopPathActive(pathname, paths.craft)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-
+    <NavLink type="top" path={paths.craft}>
+      <span>My craft</span>
       <ul
-        class="flex flex-col text-side-nav-mobile gap-6 mt-10 mb-10 font-sans"
+        class="flex flex-col text-side-nav-mobile gap-6 mt-10 mb-10 font-sans text-default"
+        slot="subnav"
       >
-        <li
-          class={cx("self-center", {
-            "text-primary": isCraftPathActive(pathname, paths.skills),
-          })}
-        >
-          <div class="pr-2">
-            <a href={paths.skills}>Skills</a>
-          </div>
-
-          <div
-            class={isCraftPathActive(pathname, paths.skills)
-              ? "h-0.5 w-full bg-primary"
-              : ""}
-          >
-          </div>
-        </li>
-
-        <li
-          class={cx("self-center", {
-            "text-primary": isCraftPathActive(pathname, paths.technologies),
-          })}
-        >
-          <div class="pr-2">
-            <a href={paths.technologies}>Tech</a>
-          </div>
-
-          <div
-            class={isCraftPathActive(pathname, paths.technologies)
-              ? "h-0.5 w-full bg-primary"
-              : ""}
-          >
-          </div>
-        </li>
-
-        <li
-          class={cx("self-center", {
-            "text-primary": isCraftPathActive(pathname, paths.projects),
-          })}
-        >
-          <div class="pr-2">
-            <a href={paths.projects}>Projects</a>
-          </div>
-
-          <div
-            class={isCraftPathActive(pathname, paths.projects)
-              ? "h-0.5 w-full bg-primary"
-              : ""}
-          >
-          </div>
-        </li>
-
-        <li
-          class={cx("self-center", {
-            "text-primary": isCraftPathActive(pathname, paths.learn),
-          })}
-        >
-          <div class="pr-2">
-            <a href={paths.learn}>Learning</a>
-          </div>
-
-          <div
-            class={isCraftPathActive(pathname, paths.learn)
-              ? "h-0.5 w-full bg-primary"
-              : ""}
-          >
-          </div>
-        </li>
-
-        <li
-          class={cx("self-center", {
-            "text-primary": isCraftPathActive(pathname, paths.work),
-          })}
-        >
-          <div class="pr-2">
-            <a href={paths.work}>Work</a>
-          </div>
-
-          <div
-            class={isCraftPathActive(pathname, paths.work)
-              ? "h-0.5 w-full bg-primary"
-              : ""}
-          >
-          </div>
-        </li>
+        <NavLink type="craft" center path={paths.skills}>Skills</NavLink>
+        <NavLink type="craft" center path={paths.technologies}>Tech</NavLink>
+        <NavLink type="craft" center path={paths.projects}>Projects</NavLink>
+        <NavLink type="craft" center path={paths.learn}>Learning</NavLink>
+        <NavLink type="craft" center path={paths.work}>Work</NavLink>
       </ul>
-    </li>
+    </NavLink>
 
-    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.about) })}>
-      <div class="px-2">
-        <a href={paths.about}>About me</a>
-      </div>
+    <NavLink type="top" path={paths.about}>About me</NavLink>
 
-      <div
-        class={isTopPathActive(pathname, paths.about)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
-
-    <li class={cx({ "text-primary": isTopPathActive(pathname, paths.blog) })}>
-      <div class="px-2">
-        <a href={paths.blog}>Blog</a>
-      </div>
-
-      <div
-        class={isTopPathActive(pathname, paths.blog)
-          ? "h-0.5 w-full bg-primary"
-          : ""}
-      >
-      </div>
-    </li>
+    <NavLink type="top" path={paths.blog}>Blog</NavLink>
   </ul>
 </nav>
