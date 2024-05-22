@@ -5,11 +5,11 @@ import { paths } from "../paths";
 
 <nav class="h-[100%]">
   <ul
-    class="flex flex-col text-nav-mobile gap-nav serif items-center p-4 h-[100%]"
+    class="flex flex-col text-center text-nav-mobile gap-nav serif items-center p-4 h-[100%]"
   >
-    <NavLink type="top" path={paths.home}>Home</NavLink>
+    <NavLink type="top" className="w-full" path={paths.home}>Home</NavLink>
 
-    <NavLink type="top" path={paths.craft}>
+    <NavLink type="top" className="w-full" path={paths.craft}>
       <span>My craft</span>
       <ul
         class="flex flex-col text-side-nav-mobile gap-6 mt-10 mb-10 font-sans text-default"
@@ -23,8 +23,8 @@ import { paths } from "../paths";
       </ul>
     </NavLink>
 
-    <NavLink type="top" path={paths.about}>About me</NavLink>
+    <NavLink type="top" className="w-full" path={paths.about}>About me</NavLink>
 
-    <NavLink type="top" path={paths.blog}>Blog</NavLink>
+    <NavLink type="top" className="w-full" path={paths.blog}>Blog</NavLink>
   </ul>
 </nav>

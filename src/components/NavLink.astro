@@ -12,11 +12,12 @@ type Props =
       type: "top";
       path: TopPath;
       center?: undefined;
+      className?: string;
     }
-  | { type: "craft"; path: CraftPath; center?: boolean };
+  | { type: "craft"; path: CraftPath; center?: boolean; className?: string };
 
 const pathname = new URL(Astro.request.url).pathname;
-const { type, path, center } = Astro.props;
+const { type, path, center, className } = Astro.props;
 
 const isActive =
   type === "top"
@@ -25,11 +26,14 @@ const isActive =
 ---
 
 <li
-  class={cx({
-    "text-primary": isActive,
-    "self-center": center,
-    "self-start": !center,
-  })}
+  class={cx(
+    {
+      "text-primary": isActive,
+      "self-center": center,
+      "self-start": !center,
+    },
+    className
+  )}
 >
   <div class="px-2">
     <a href={path}><slot /></a>
