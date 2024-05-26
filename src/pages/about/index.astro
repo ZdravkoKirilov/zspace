@@ -7,11 +7,11 @@ import DecoratedList from "../../components/DecoratedList.astro";
 const socials = [
   {
     title: "GitHub",
-    url: "https://github.com",
+    url: "https://github.com/ZdravkoKirilov",
   },
   {
     title: "LinkedIn",
-    url: "https://urledin.com",
+    url: "https://www.linkedin.com/in/zdravko-kirilov/",
   },
   {
     title: "zdravkovasilchevkirilov@gmail.com",
@@ -21,22 +21,22 @@ const socials = [
 ---
 
 <Layout title="About me">
-  <main class="flex flex-col gap-16">
+  <main class="flex flex-col gap-12">
     <header class="flex items-start gap-12">
       <div class="text-primary w-[150px]">
         <Fragment set:html={SwissKnife} />
       </div>
 
       <section class="flex flex-col gap-8">
-        <h2 class="text-xl font-bold">
-          I'm Zdravko, a Software Engineer from Bulgaria.
+        <h2 class="text-xl font-bold tracking-wide">
+          Zdravko Kirilov - Web Engineer
         </h2>
 
         <DecoratedList items={socials} />
       </section>
     </header>
 
-    <article class="grow leading-loose max-w-articles">
+    <article class="grow leading-loose max-w-articles tracking-wide">
       <About />
     </article>
   </main>

@@ -4,7 +4,6 @@ import classNames from "classnames";
 type Item = {
   title: string;
   url?: string;
-  labelId?: string;
 };
 
 export type Props = {
@@ -45,7 +44,7 @@ const { items, className, gapSize = "normal" } = Astro.props;
         >
           {index > 0 && <div class="w-[5px] h-[5px] rounded-full bg-primary" />}
           {item.url ? (
-            <a href={item.url} class="underline">
+            <a href={item.url} class="underline" target="_blank">
               {item.title}
             </a>
           ) : (
