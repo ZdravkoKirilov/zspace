@@ -26,10 +26,14 @@ const { items, className, gapSize = "normal" } = Astro.props;
   }
 
   <ul
-    class={classNames("list-none m-0 p-0 flex items-center", className, {
-      "gap-3": gapSize === "normal",
-      "gap-2": gapSize === "small",
-    })}
+    class={classNames(
+      "list-none m-0 p-0 flex items-center flex-wrap",
+      className,
+      {
+        "gap-3": gapSize === "normal",
+        "gap-2": gapSize === "small",
+      }
+    )}
   >
     {
       items.map((item, index) => (

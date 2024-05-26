@@ -2,7 +2,9 @@
 import CombinedNavigation from "../components/CombinedNavigation.astro";
 import MainNavigation from "../components/MainNavigation.astro";
 import SideNavigation from "../components/SideNavigation.astro";
+import logo from "../assets/logo.png";
 import "../styles/global.css";
+import { paths } from "../paths";
 
 type Props = {
   title: string;
@@ -31,16 +33,22 @@ const { title } = Astro.props;
   <body class="p-12 text-default bg-background container mx-auto">
     <main>
       <aside
-        class="mobile-nav flex flex-col sm:hidden fixed left-0 top-0 right-0 z-10 bg-card p-4 shadow-md"
+        class="flex flex-col sm:hidden fixed left-0 top-0 right-0 z-10 bg-card p-4 shadow-md"
       >
-        <button
-          class="self-end bg-none border-default border border-solid rounded px-4 py-2 text-default cursor-pointer active:text-white zs-hidden zs-button"
-          >Close</button
-        >
-        <button
-          class="self-end bg-none border-default border border-solid rounded px-4 py-2 text-default cursor-pointer active:text-white zs-button"
-          >Menu</button
-        >
+        <div class="flex justify-between gap-6">
+          <a href={paths.home}>
+            <img src={logo.src} alt="Logo" class="max-w-[40px]" />
+          </a>
+
+          <button
+            class="self-end bg-none border-default border border-solid rounded px-4 py-2 text-default cursor-pointer active:text-white zs-hidden zs-button"
+            >Close</button
+          >
+          <button
+            class="self-end bg-none border-default border border-solid rounded px-4 py-2 text-default cursor-pointer active:text-white zs-button"
+            >Menu</button
+          >
+        </div>
 
         <div class="zs-slided-out zs-nav">
           <CombinedNavigation />
