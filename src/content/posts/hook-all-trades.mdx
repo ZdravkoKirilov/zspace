@@ -5,50 +5,105 @@ type: article
 featured_image: jack-trades.jpg
 tags: [React, Front end, Clean code]
 
-created_on: 2023-07-22
+created_on: 2024-05-27
 ---
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+There's a repeating pattern I see in many React projects: a narrowly purposed
+component gradually grows into a multi-headed monster doing too many things.
+An example of polluted state could be as simple as keeping numerous flags for
+floating elements and feedback indicators:
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+```jsx
+const SomeComponent = () => {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const data = useFetchData(...);
+    ...
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+    const submitSomeData = () => {
+        setIsLoading(true);
+        ...
+        setIsSuccess(true);
+    };
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+    <div>
+        {data.map(...)}
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+        <button
+          onClick={() => setModalOpen(true)}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'Edit'}
+        </button>
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+        <Modal open={modalOpen} onSubmit={submitSomeData} ... />
+        <Toast open={isSuccess} ... />
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+    </div>
+}
+```
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+A component that started with just fetching and displaying some data had to
+later on cater for mutations, we decided to use a modal for the form, we had to deal
+with its open/close state, then came the loaders, the feedback indicators and so on.
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+We can tidy things up significantly by colocating UI and mutations into a single custom hook -
+it's something people often don't realize - nothing stops us from returning
+JSX from a hook!
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+```jsx
+
+const useSubmitModal = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const submitSomeData = () => {
+        setIsLoading(true);
+        ...
+        setIsSuccess(true);
+        setIsOpen(false);
+    };
+
+    return {
+        UI: (
+          <>
+             <Modal open={isOpen}>
+             <Toast open={isSuccess} />
+          </>
+        ),
+        open: () => setIsOpen(true),
+        isLoading,
+        isSuccess,
+    }
+}
+```
+
+Suddenly we're back to being tidy and concerns are better separated - mutations,
+their UI and feedback live together and in most cases can be reused.
+
+```jsx
+
+const SomeComponent = () => {
+    const data = useFetchData(...);
+
+    const { UI, isLoading, open, ... } = useSubmitModal();
+
+    <div>
+        {data.map(...)}
+        ....
+
+        <button
+          onClick={open}
+          disabled={isLoading}
+        >
+           {isLoading ? 'Loading...' : 'Edit'}
+        </button>
+
+        {UI}
+
+    </div>
+}
+
+```

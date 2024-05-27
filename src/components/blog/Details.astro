@@ -22,7 +22,9 @@ const image = loadImage && (loadImage() as Promise<{ default: ImageMetadata }>);
 ---
 
 <MainLayout title={post.display_name}>
-  <article class="flex flex-col gap-12 max-w-articles">
+  <article
+    class="flex flex-col gap-12 max-w-articles tracking-wide leading-loose blog-post"
+  >
     <header class="flex flex-col gap-6">
       <h1 class="text-3xl">{post.display_name}</h1>
       <DecoratedList
@@ -37,3 +39,9 @@ const image = loadImage && (loadImage() as Promise<{ default: ImageMetadata }>);
     <slot />
   </article>
 </MainLayout>
+
+<style is:global>
+  .blog-post pre {
+    padding: 16px;
+  }
+</style>

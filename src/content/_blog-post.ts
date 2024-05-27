@@ -2,7 +2,7 @@ import { z } from "astro:content";
 
 export enum PostId {
   hookAllTrades = "hook-all-trades",
-  goodEnoughSoftware = "good-enough-software",
+  whyTypes = "why-typescript",
 }
 
 export enum PostType {
