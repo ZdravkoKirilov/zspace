@@ -10,7 +10,7 @@ created_on: 2024-05-27
 
 There's a repeating pattern I see in many React projects: a narrowly purposed
 component gradually grows into a multi-headed monster doing too many things.
-An example of polluted state could be as simple as keeping flags for various
+An example of polluted state could be as simple as keeping numerous flags for
 floating elements and feedback indicators:
 
 ```jsx
@@ -19,7 +19,7 @@ const SomeComponent = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const data = useFetchData(...);
-    .... possibly other hooks
+    ...
 
     const submitSomeData = () => {
         setIsLoading(true);
@@ -29,7 +29,6 @@ const SomeComponent = () => {
 
     <div>
         {data.map(...)}
-        ....
 
         <button
           onClick={() => setModalOpen(true)}
@@ -39,16 +38,19 @@ const SomeComponent = () => {
         </button>
 
         <Modal open={modalOpen} onSubmit={submitSomeData} ... />
-
         <Toast open={isSuccess} ... />
 
     </div>
 }
 ```
 
-We can tidy this up though by colocating UI and actions into a single custom hook -
-this is something people sometimes don't realize - nothing stops us from returning
-JSX from them!
+A component that started with just fetching and displaying some data had to
+later on cater for mutations, we decided to use a modal for the form, we had to deal
+with its open/close state, then came the loaders, the feedback indicators and so on.
+
+We can tidy things up significantly by colocating UI and mutations into a single custom hook -
+it's something people often don't realize - nothing stops us from returning
+JSX from a hook!
 
 ```jsx
 
@@ -61,9 +63,6 @@ const useSubmitModal = () => {
         setIsLoading(true);
         ...
         setIsSuccess(true);
-
-        // the modal self closes when the operation completes - consumers
-        // no longer need to take care
         setIsOpen(false);
     };
 
@@ -71,24 +70,23 @@ const useSubmitModal = () => {
         UI: (
           <>
              <Modal open={isOpen}>
-             <Toast open={isSuccess} ... />
+             <Toast open={isSuccess} />
           </>
         ),
-
-        // the modal can be opened by consumers
         open: () => setIsOpen(true),
-
         isLoading,
         isSuccess,
-        ... whatever else consumers might need
     }
 }
+```
 
-// the component is much tidier
+Suddenly we're back to being tidy and concerns are better separated - mutations,
+their UI and feedback live together and in most cases can be reused.
+
+```jsx
 
 const SomeComponent = () => {
     const data = useFetchData(...);
-    ... other hooks
 
     const { UI, isLoading, open, ... } = useSubmitModal();
 
@@ -107,4 +105,5 @@ const SomeComponent = () => {
 
     </div>
 }
+
 ```
