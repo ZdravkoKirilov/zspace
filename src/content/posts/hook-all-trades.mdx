@@ -5,50 +5,106 @@ type: article
 featured_image: jack-trades.jpg
 tags: [React, Front end, Clean code]
 
-created_on: 2023-07-22
+created_on: 2024-05-27
 ---
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+There's a repeating pattern I see in many React projects: a narrowly purposed
+component gradually grows into a multi-headed monster doing too many things.
+An example of polluted state could be as simple as keeping flags for various
+floating elements and feedback indicators:
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+```jsx
+const SomeComponent = () => {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const data = useFetchData(...);
+    .... possibly other hooks
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+    const submitSomeData = () => {
+        setIsLoading(true);
+        ...
+        setIsSuccess(true);
+    };
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+    <div>
+        {data.map(...)}
+        ....
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+        <button
+          onClick={() => setModalOpen(true)}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'Edit'}
+        </button>
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+        <Modal open={modalOpen} onSubmit={submitSomeData} ... />
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+        <Toast open={isSuccess} ... />
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+    </div>
+}
+```
 
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
-This is the hook of all trades! This is the hook of all trades!
+We can tidy this up though by colocating UI and actions into a single custom hook -
+this is something people sometimes don't realize - nothing stops us from returning
+JSX from them!
 
-This is the hook of all trades! This is the hook of all trades!This is the hook of all trades!
-This is the hook of all trades!
+```jsx
+
+const useSubmitModal = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const submitSomeData = () => {
+        setIsLoading(true);
+        ...
+        setIsSuccess(true);
+
+        // the modal self closes when the operation completes - consumers
+        // no longer need to take care
+        setIsOpen(false);
+    };
+
+    return {
+        UI: (
+          <>
+             <Modal open={isOpen}>
+             <Toast open={isSuccess} ... />
+          </>
+        ),
+
+        // the modal can be opened by consumers
+        open: () => setIsOpen(true),
+
+        isLoading,
+        isSuccess,
+        ... whatever else consumers might need
+    }
+}
+
+// the component is much tidier
+
+const SomeComponent = () => {
+    const data = useFetchData(...);
+    ... other hooks
+
+    const { UI, isLoading, open, ... } = useSubmitModal();
+
+    <div>
+        {data.map(...)}
+        ....
+
+        <button
+          onClick={open}
+          disabled={isLoading}
+        >
+           {isLoading ? 'Loading...' : 'Edit'}
+        </button>
+
+        {UI}
+
+    </div>
+}
+```
