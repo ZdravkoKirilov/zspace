@@ -29,7 +29,7 @@ export default {
         item: "2rem",
       },
       maxWidth: {
-        articles: "90ch",
+        articles: "80ch",
       },
     },
   },
