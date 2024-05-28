@@ -10,8 +10,8 @@ created_on: 2024-05-27
 
 There's a repeating pattern I see in many React projects: a narrowly purposed
 component gradually grows into a multi-headed monster doing too many things.
-An example of polluted state could be as simple as keeping numerous flags for
-floating elements and feedback indicators:
+Such example of a "noisy" component state could be as simple as keeping numerous
+flags for floating elements and feedback indicators:
 
 ```jsx
 const SomeComponent = () => {
@@ -19,7 +19,6 @@ const SomeComponent = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const data = useFetchData(...);
-    ...
 
     const submitSomeData = () => {
         setIsLoading(true);
@@ -29,28 +28,27 @@ const SomeComponent = () => {
 
     <div>
         {data.map(...)}
-
         <button
           onClick={() => setModalOpen(true)}
           disabled={isLoading}
         >
-          {isLoading ? 'Loading...' : 'Edit'}
+          {isLoading ? 'Loading...' : 'Add'}
         </button>
 
         <Modal open={modalOpen} onSubmit={submitSomeData} ... />
         <Toast open={isSuccess} ... />
-
     </div>
 }
 ```
 
-A component that started with just fetching and displaying some data had to
-later on cater for mutations, we decided to use a modal for the form, we had to deal
-with its open/close state, then came the loaders, the feedback indicators and so on.
+A component which usually starts with just data fetching gradually
+starts dealing with mutations, forms inside modals, their open/close state,
+then come the loaders, the feedback indicators and so on.
 
 We can tidy things up significantly by colocating UI and mutations into a single custom hook -
-it's something people often don't realize - nothing stops us from returning
-JSX from a hook!
+it's something people don't always realize - nothing stops us from returning
+JSX from a hook. Then we just expose some UI and a function to bring it up 
+(which is the reason we're not just extracting a component but a hook). 
 
 ```jsx
 
@@ -81,19 +79,19 @@ const useSubmitModal = () => {
 ```
 
 Suddenly we're back to being tidy and concerns are better separated - mutations,
-their UI and feedback live together and in most cases can be reused.
+their UI and feedback live together and we can even reuse them. Consumer
+components decide when to bring up the UI but don't need to keep any open/close
+state - it has become an implementation detail of the hook itself:
 
 ```jsx
 
 const SomeComponent = () => {
     const data = useFetchData(...);
-
     const { UI, isLoading, open, ... } = useSubmitModal();
 
     <div>
         {data.map(...)}
         ....
-
         <button
           onClick={open}
           disabled={isLoading}
@@ -102,8 +100,18 @@ const SomeComponent = () => {
         </button>
 
         {UI}
-
     </div>
 }
 
 ```
+
+This approach can have long term implications and even prevent bugs - a minor
+mistake I often see is keeping modal state in some sort of global store where
+toggling it becomes a much more imperative hassle - it's easier to forget to clean
+up in certain situations. We have to remember to do yet one more thing, in multiple 
+places. 
+
+
+--> Now compare it to our solution which practically self cleans - the
+toggle state is local and goes away when the hook unmounts along with the component
+using it.
