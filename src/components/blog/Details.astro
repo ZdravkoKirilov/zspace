@@ -23,7 +23,7 @@ const image = loadImage && (loadImage() as Promise<{ default: ImageMetadata }>);
 
 <MainLayout title={post.display_name}>
   <article
-    class="flex flex-col gap-12 max-w-articles tracking-wide leading-loose blog-post"
+    class="flex flex-col gap-12 max-w-articles tracking-wide leading-loose"
   >
     <header class="flex flex-col gap-6">
       <h1 class="text-3xl">{post.display_name}</h1>
@@ -36,12 +36,24 @@ const image = loadImage && (loadImage() as Promise<{ default: ImageMetadata }>);
       />
     </header>
     {image && <Image src={image} alt="Featured image" class="max-w-[50%]" />}
-    <slot />
+    <div class="zs-post-content">
+      <slot />
+    </div>
   </article>
 </MainLayout>
 
 <style is:global>
-  .blog-post pre {
+  .zs-post-content pre {
     padding: 16px;
+  }
+
+  .zs-post-content ul {
+    list-style: disc;
+    padding-left: 32px;
+  }
+
+  .zs-post-content p {
+    margin-top: 16px;
+    margin-bottom: 16px;
   }
 </style>

@@ -8,4 +8,158 @@ tags: [Software design, Clean code, TypeScript]
 created_on: 2024-05-27
 ---
 
-On good enough software
+I started my career writing pure JavaScript for complex and non-trivial apps and
+at the time I just thought of it as "normal" - something that nowadays I would
+describe as "pure misery".
+
+I first stumbled upon TypeScript because of Angular 2. And it felt exhilarating,
+I just didn't realize for a while that the joy was coming from the language and not
+so much the framework. Nowadays I couldn't imagine doing any half serious work on an untyped language regardless of libraries, frameworks or runtimes.
+
+The "Hello world" of TypeScript is an example of adding two numbers:
+
+```ts
+function addNumbers(a: number, b: number) {
+  return a + b;
+}
+
+addNumbers(1, "a chicken"); // boom
+```
+
+Works well as a start point, but there are other benefits like:
+
+- intelisense
+- more "works on the first run" occurences
+- describing business logic and states
+
+Let's go into more detail about the last one. Imagine we're building a very simple
+applicant tracking system, where we have the following data model:
+
+```ts
+type JobApplication = {
+    state: string;
+    email: string;
+    name: string
+
+    job_title: string;
+    skills: string[];
+    ... etc
+}
+```
+
+A developer hops in and tries to display a list of the candidate's skills before
+the application is submitted:
+
+```jsx
+jobApp.skills.map((skill) => <span>{skill}</span>);
+```
+
+.. and boom - we run into the "`cannot access property of undefined`" error. Sadly
+what I see people do is reaching for optional fields:
+
+```ts
+type JobApplication = {
+    state: string;
+    email: string;
+    name: string
+
+    job_title?: string;
+    skills?: string[];
+    ... etc
+}
+```
+
+It's lazy and sloppy, it basically lies half the time and leads to situations
+like the following: a new front-end developer has just joined the company.
+We're rebuilding the screen where we display submitted job applications. She takes
+a look at the types and figures that the job application might be lacking the
+"skills" field:
+
+```jsx
+if (!jobApp.skills) {
+  return <div>No skills.</div>;
+}
+```
+
+But a plain div is not up to standards in our company, let's reach to a designer
+and see what we should display instead. Now at this point the designer may or may
+not point out to us that if we're looking at the "submitted job applications"
+screen then we'll for sure have at least 3 skills listed, because that's how
+we roll.
+
+Let's imagine we wasted the designer's time thinking on how to tackle
+this UI and we open a pull request. An all-knowing founding engineer looks at
+the code and points the impossible situation to us. We're wasting more company
+time.
+
+---
+
+How much easier would it be if we wrote such code:
+
+```ts
+
+type DraftJobApplication = {
+    state: "draft";
+    email: string;
+    name: string
+
+    job_title?: string;
+    skills?: string[];
+    ... etc
+}
+
+type SubmittedJobApplication = {
+    state: "submitted";
+    email: string;
+    name: string
+
+    job_title: string;
+    skills: string[];
+    ... etc
+}
+
+function submit(jobApp: DraftJobApplication): SubmittedJobApplication {
+    ...
+}
+
+```
+
+Projects that describe business logic as a collection of states and the valid
+operations we can do on them require some time to setup but in my experience
+pay that off tenfold. Not just in company time, but also in developer happiness.
+That new recruit would've probably understood all she had to from the code itself
+without having to message people or feel awkward during the code review.
+Domain knowledge isn't blackboxed inside the founding engineers' heads - instead
+we have a living documentation right where we need it.
+
+I see types as the tool to achieve that. It goes way beyond summing two numbers
+or "protecting you from bugs".
+
+---
+
+In a follow-up post I'll improve the typed example even more and explain why
+and how to achieve even better describe-ability with custom types:
+
+```ts
+
+type DraftJobApplication = {
+    state: "draft";
+    email: Email;
+    name: StringOfLength<1, 50>;
+
+    job_title?: StringOfLength<2, 50>;
+    skills?: ArrayOfLength<string, 0, 20>;
+    ... etc
+}
+
+type SubmittedJobApplication = {
+    state: "submitted";
+    email: Email;
+    name: StringOfLength<1, 50>;
+
+    job_title: StringOfLength<2, 50>;
+    skills: ArrayOfLength<string, 3, 20>;;
+    ... etc
+}
+
+```
