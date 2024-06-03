@@ -75,6 +75,16 @@ const tech = await getEntries(project.tech);
         </section>
       </Accordion>
     </header>
-    <slot />
+
+    <div class="zs-content max-w-articles tracking-wide leading-loose">
+      <slot />
+    </div>
   </article>
 </CraftLayout>
+
+<style is:global>
+  .zs-content p {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+</style>

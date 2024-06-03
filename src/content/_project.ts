@@ -1,8 +1,6 @@
 import { z, reference } from "astro:content";
 
 import { Weight } from "./_shared";
-import { TechId } from "./_tech";
-import { SkillId } from "./_skill";
 
 export enum ProjectId {
   /* ISG */
@@ -30,7 +28,7 @@ export enum ProjectId {
   LoyaltyLionAdmin = "ll-admin",
 
   /* Personal */
-  Portfolio = "portfolio",
+  ZSpace = "zspace",
   TravelAppConcept = "travel-app-concept",
   CustomReact = "custom-react",
   DjangoApi = "django-api",

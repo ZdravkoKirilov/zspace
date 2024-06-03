@@ -24,6 +24,7 @@ export enum TechId {
   CSS = "css",
   TailwindCss = "tailwind-css",
   VanillaExtract = "vanilla-extract",
+  Astro = "astro",
 }
 
 export const tech = z.object({
