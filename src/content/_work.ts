@@ -24,8 +24,6 @@ export const work = z.object({
   tags: z.array(z.string()).optional(),
 
   projects: z.array(reference("projects")),
-  skills: z.array(reference("skills")),
-  tech: z.array(reference("tech")),
 });
 
 export type Work = z.infer<typeof work>;

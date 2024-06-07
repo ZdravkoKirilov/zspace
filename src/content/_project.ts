@@ -4,7 +4,7 @@ import { Weight } from "./_shared";
 
 export enum ProjectId {
   /* ISG */
-  DynamicFormBuilder = "dynamic-form-builder",
+  DynamicFormBuilder = "form-builder",
 
   /* KPMG */
   KPMGAnalytics = "kpmg-analytics",
