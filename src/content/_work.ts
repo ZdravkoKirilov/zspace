@@ -14,7 +14,6 @@ export const work = z.object({
   id: z.nativeEnum(WorkId),
   display_name: z.string(),
   weight: z.nativeEnum(Weight),
-  order: z.number().int(),
 
   employer_name: z.string(),
   employer_url: z.string().url(),

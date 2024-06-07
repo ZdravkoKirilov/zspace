@@ -9,6 +9,7 @@ export enum TechId {
   Express = "express",
   Nest = "nest",
   Angular = "angular",
+  Redux = "redux",
   TestingLibrary = "testing-library",
   Jest = "jest",
   MongoDB = "mongodb",
@@ -22,16 +23,23 @@ export enum TechId {
   Bootstrap = "bootstrap",
   MaterialUi = "material-ui",
   CSS = "css",
+  HTML = "html",
   TailwindCss = "tailwind-css",
   VanillaExtract = "vanilla-extract",
   Astro = "astro",
+  Next = "next",
+  Remix = "remix",
+
+  JavaScript = "javascript",
+  jQuery = "jquery",
 }
 
 export const tech = z.object({
   id: z.nativeEnum(TechId),
   display_name: z.string(),
   weight: z.nativeEnum(Weight),
-  order: z.number().int(),
 });
 
 export type Tech = z.infer<typeof tech>;
+
+export const order = Object.values(TechId).map((id) => id as TechId);

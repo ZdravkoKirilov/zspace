@@ -5,9 +5,10 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
 import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
+import { order } from "../../content/_learning";
 
 const learningList = await getCollection("learn").then((items) =>
-  items.sort((a, b) => a.data.order - b.data.order)
+  items.sort((a, b) => order.indexOf(a.data.id) - order.indexOf(b.data.id))
 );
 ---
 

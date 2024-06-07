@@ -39,7 +39,6 @@ export const project = z.object({
   id: z.nativeEnum(ProjectId),
   display_name: z.string(),
   weight: z.nativeEnum(Weight),
-  order: z.number().int(),
 
   from: z.date(),
   to: z.date().optional(),
@@ -51,3 +50,5 @@ export const project = z.object({
 });
 
 export type Project = z.infer<typeof project>;
+
+export const order = Object.values(ProjectId).map((id) => id as ProjectId);

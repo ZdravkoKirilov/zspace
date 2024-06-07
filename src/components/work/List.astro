@@ -6,7 +6,7 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
 import JobEntry from "./JobEntry.astro";
 
 const jobsList = await getCollection("work").then((items) =>
-  items.sort((a, b) => a.data.order - b.data.order)
+  items.sort((a, b) => b.data.from - a.data.from)
 );
 ---
 

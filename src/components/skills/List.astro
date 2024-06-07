@@ -6,9 +6,10 @@ import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
 import { getElapsedTimeInYears } from "../../utils/dates";
+import { order } from "../../content/_skill";
 
 const skillsList = await getCollection("skills").then((items) =>
-  items.sort((a, b) => a.data.order - b.data.order)
+  items.sort((a, b) => order.indexOf(a.data.id) - order.indexOf(b.data.id))
 );
 ---
 

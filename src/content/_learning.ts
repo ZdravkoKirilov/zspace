@@ -14,7 +14,6 @@ export const learn = z.object({
   id: z.nativeEnum(LearnId),
   display_name: z.string(),
   weight: z.nativeEnum(Weight),
-  order: z.number().int(),
 
   from: z.date(),
   to: z.date().optional(),
@@ -25,3 +24,5 @@ export const learn = z.object({
 });
 
 export type Learn = z.infer<typeof learn>;
+
+export const order = Object.values(LearnId).map((id) => id as LearnId);
