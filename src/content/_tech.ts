@@ -9,6 +9,7 @@ export enum TechId {
   Express = "express",
   Nest = "nest",
   Angular = "angular",
+  D3 = "d3",
   Redux = "redux",
   TestingLibrary = "testing-library",
   Jest = "jest",

@@ -21,6 +21,8 @@ export const work = z.object({
   from: z.date(),
   to: z.date().optional(),
 
+  tags: z.array(z.string()).optional(),
+
   projects: z.array(reference("projects")),
   skills: z.array(reference("skills")),
   tech: z.array(reference("tech")),

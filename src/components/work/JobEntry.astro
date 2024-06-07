@@ -63,6 +63,17 @@ const skills = await getEntries(job.skills).then((entries) =>
           <a href={job.employer_url} target="_blank" class="underline"
             >{job.employer_name}</a
           >
+          {
+            job.tags && (
+              <span class="text-sm ml-4">
+                (
+                {job.tags
+                  ?.map((elem) => elem.charAt(0).toUpperCase() + elem.slice(1))
+                  .join(", ")}
+                )
+              </span>
+            )
+          }
         </h3>
         <div slot="content" class="mt-10 flex flex-col gap-16">
           <AccordionContent>

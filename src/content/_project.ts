@@ -7,9 +7,9 @@ export enum ProjectId {
   DynamicFormBuilder = "dynamic-form-builder",
 
   /* KPMG */
-  D3Analytics = "d3-analytics",
-  CompanyOrgChart = "company-org-chart",
-  CompanyPhoneManagement = "company-phone-management",
+  KPMGAnalytics = "kpmg-analytics",
+  OrgChart = "kpmg-org-chart",
+  PhoneManagement = "kpmg-phone-management",
 
   /* Droxic */
   CMSApp = "cms-app",

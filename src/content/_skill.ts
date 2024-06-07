@@ -14,8 +14,6 @@ export enum SkillId {
   RestfulApis = "restful-apis",
   DomainModeling = "domain-modeling",
   DataModeling = "data-modeling",
-  Pragmatism = "pragmatism",
-  Simplicity = "simplicity",
   TypeDrivenDevelopment = "type-driven-development",
   HybridMobileApps = "hybrid-mobile-apps",
   ResponsiveDesign = "responsive-design",
