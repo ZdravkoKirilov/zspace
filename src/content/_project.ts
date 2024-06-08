@@ -12,10 +12,11 @@ export enum ProjectId {
   PhoneManagement = "kpmg-phone-management",
 
   /* Droxic */
-  CMSApp = "cms-app",
+  MediaSite = "media-site",
   FintechApp = "fintech-app",
   IoTApp = "iot-app",
   SportsApp = "sports-app",
+  MentorshipProgram = "mentorship-program",
 
   /* TAG */
   TravelAgentApp = "travel-agent-app",

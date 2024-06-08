@@ -6,6 +6,7 @@ export enum SkillId {
   UiUxLiteracy = "uiux",
   Accessibility = "accessibility",
   FrontEndArchitecture = "fe-architecture",
+  FrontEndDevelopment = "fe-development",
   FullStackDevelopment = "fullstack",
   DesignSystems = "design-systems",
   Mentoring = "mentoring",
@@ -22,6 +23,13 @@ export enum SkillId {
   FrameworkAuthoring = "framework-authoring",
   DatabaseDesign = "database-design",
   FullStackArchitecture = "fullstack-architecture",
+  TechLeading = "tech-leading",
+  AutonomousDelivery = "autonomous-delivery",
+  Refactoring = "refactoring",
+  TechnicalSupport = "technical-support",
+  TeamCollaboration = "team-collaboration",
+  SpaApplications = "spa-applications",
+  SsrApplications = "ssr-applications",
 }
 
 export const skill = z.object({

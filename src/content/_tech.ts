@@ -31,9 +31,17 @@ export enum TechId {
   Astro = "astro",
   Next = "next",
   Remix = "remix",
-
+  Ngrx = "ngrx",
+  Rxjs = "rxjs",
   JavaScript = "javascript",
   jQuery = "jquery",
+  Formik = "formik",
+  WebSockets = "websockets",
+  TanstackQuery = "tanstack-query",
+  ReactHookForm = "react-hook-form",
+  ReactRouter = "react-router",
+  Zod = "zod",
+  Iots = "iots",
 }
 
 export const tech = z.object({
