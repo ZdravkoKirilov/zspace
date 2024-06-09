@@ -10,6 +10,7 @@ export enum TechId {
   Nest = "nest",
   Angular = "angular",
   AngularMaterial = "angular-material",
+  StyledComponents = "styled-components",
   D3 = "d3",
   Redux = "redux",
   TestingLibrary = "testing-library",
@@ -42,6 +43,7 @@ export enum TechId {
   ReactRouter = "react-router",
   Zod = "zod",
   Iots = "iots",
+  Zustand = "zustand",
 }
 
 export const tech = z.object({

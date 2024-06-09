@@ -23,10 +23,11 @@ export enum ProjectId {
 
   /* Headstart */
   AtsApp = "ats",
-  ScreeningApp = "screening-app",
+  FairScreen = "fairscreen",
 
   /* LL */
   LoyaltyLionAdmin = "ll-admin",
+  LoyaltyLionCustomer = "ll-customer",
 
   /* Personal */
   ZSpace = "zspace",
@@ -34,6 +35,7 @@ export enum ProjectId {
   CustomReact = "custom-react",
   DjangoApi = "django-api",
   OAuthApp = "oauth-app",
+  TeamAssist = "team-assist",
 }
 
 export const project = z.object({

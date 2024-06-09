@@ -19,6 +19,7 @@ export enum SkillId {
   HybridMobileApps = "hybrid-mobile-apps",
   ResponsiveDesign = "responsive-design",
 
+  ProgressiveWebApps = "progressive-web-apps",
   OfflineArchitecture = "offline-architecture",
   FrameworkAuthoring = "framework-authoring",
   DatabaseDesign = "database-design",
@@ -30,6 +31,8 @@ export enum SkillId {
   TeamCollaboration = "team-collaboration",
   SpaApplications = "spa-applications",
   SsrApplications = "ssr-applications",
+  AuthFlows = "auth-flows",
+  StateManagement = "state-management",
 }
 
 export const skill = z.object({
