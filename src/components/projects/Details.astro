@@ -28,7 +28,7 @@ const tech = await getEntries(project.tech);
         <section slot="header" class="flex gap-6 items-baseline">
           {
             project.url ? (
-              <a class="underline" href={project.url} target="_blank">
+              <a class="underline" href={project.url}>
                 <h1 class="font-bold text-xl">{project.display_name}</h1>
               </a>
             ) : (
@@ -96,6 +96,6 @@ const tech = await getEntries(project.tech);
   .zs-content blockquote {
     padding: 16px;
     font-style: italic;
-    background: gray
+    background: gray;
   }
 </style>
