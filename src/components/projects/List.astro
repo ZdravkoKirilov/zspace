@@ -6,6 +6,8 @@ import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
 import { order } from "../../content/_project";
+import Star from "../../assets/star.svg?raw";
+import { Weight } from "../../content/_shared";
 
 const projectsList = await getCollection("projects").then((items) =>
   items.sort((a, b) => order.indexOf(a.data.id) - order.indexOf(b.data.id))
@@ -13,26 +15,66 @@ const projectsList = await getCollection("projects").then((items) =>
 ---
 
 <CraftLayout title="Learnings">
-  <main class="grow">
-    <CardsList>
-      {
-        projectsList.map(async (project) => {
-          const skills = await getEntries(project.data.skills);
-          const tech = await getEntries(project.data.tech);
+  <main class="grow flex flex-col gap-16">
+    <section class="flex flex-col gap-8">
+      <div class="flex gap-4 items-center">
+        <h2 class="text-xl">Featured projects</h2>
+        <span class="text-primary max-w-[32px]">
+          <Fragment set:html={Star} />
+        </span>
+      </div>
 
-          return (
-            <li class="flex">
-              <Card
-                title={project.data.display_name}
-                skills={skills.length}
-                technologies={tech.length}
-                url={paths.projectDetails(project.data.id)}
-                className="grow"
-              />
-            </li>
-          );
-        })
-      }
-    </CardsList>
+      <CardsList>
+        {
+          projectsList
+            .filter((project) => project.data.weight === Weight.Highlighted)
+            .map(async (project) => {
+              const skills = await getEntries(project.data.skills);
+              const tech = await getEntries(project.data.tech);
+
+              return (
+                <li class="flex">
+                  <Card
+                    title={project.data.display_name}
+                    skills={skills.length}
+                    technologies={tech.length}
+                    url={paths.projectDetails(project.data.id)}
+                    className="grow"
+                  />
+                </li>
+              );
+            })
+        }
+      </CardsList>
+    </section>
+
+    <section class="flex flex-col gap-8">
+      <div class="flex gap-4 items-center">
+        <h2 class="text-xl">Other projects</h2>
+      </div>
+
+      <CardsList>
+        {
+          projectsList
+            .filter((project) => project.data.weight !== Weight.Highlighted)
+            .map(async (project) => {
+              const skills = await getEntries(project.data.skills);
+              const tech = await getEntries(project.data.tech);
+
+              return (
+                <li class="flex">
+                  <Card
+                    title={project.data.display_name}
+                    skills={skills.length}
+                    technologies={tech.length}
+                    url={paths.projectDetails(project.data.id)}
+                    className="grow"
+                  />
+                </li>
+              );
+            })
+        }
+      </CardsList>
+    </section>
   </main>
 </CraftLayout>

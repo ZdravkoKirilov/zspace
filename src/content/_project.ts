@@ -3,39 +3,41 @@ import { z, reference } from "astro:content";
 import { Weight } from "./_shared";
 
 export enum ProjectId {
+  /* LL */
+  LoyaltyLionAdmin = "ll-admin",
+  LoyaltyLionCustomer = "ll-customer",
+
+  /* Headstart */
+  FairScreen = "fairscreen",
+  AtsApp = "ats",
+
+  ZSpace = "zspace",
+  TeamAssist = "team-assist",
+  MentorshipProgram = "mentorship-program",
+
   /* ISG */
   DynamicFormBuilder = "form-builder",
 
-  /* KPMG */
-  KPMGAnalytics = "kpmg-analytics",
-  OrgChart = "kpmg-org-chart",
-  PhoneManagement = "kpmg-phone-management",
+  /* TAG */
+  TravelAgentApp = "travel-agent-app",
 
   /* Droxic */
   MediaSite = "media-site",
   FintechApp = "fintech-app",
   IoTApp = "iot-app",
   SportsApp = "sports-app",
-  MentorshipProgram = "mentorship-program",
 
-  /* TAG */
-  TravelAgentApp = "travel-agent-app",
-
-  /* Headstart */
-  AtsApp = "ats",
-  FairScreen = "fairscreen",
-
-  /* LL */
-  LoyaltyLionAdmin = "ll-admin",
-  LoyaltyLionCustomer = "ll-customer",
+  /* KPMG */
+  KPMGAnalytics = "kpmg-analytics",
+  OrgChart = "kpmg-org-chart",
+  PhoneManagement = "kpmg-phone-management",
 
   /* Personal */
-  ZSpace = "zspace",
+
   TravelAppConcept = "travel-app-concept",
   CustomReact = "custom-react",
   DjangoApi = "django-api",
   OAuthApp = "oauth-app",
-  TeamAssist = "team-assist",
 }
 
 export const project = z.object({
