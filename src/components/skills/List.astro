@@ -5,8 +5,10 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
 import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
+import Star from "../../assets/star.svg?raw";
 import { getElapsedTimeInYears } from "../../utils/dates";
 import { order } from "../../content/_skill";
+import { Weight } from "../../content/_shared";
 
 const skillsList = await getCollection("skills").then((items) =>
   items.sort((a, b) => order.indexOf(a.data.id) - order.indexOf(b.data.id))
@@ -14,43 +16,102 @@ const skillsList = await getCollection("skills").then((items) =>
 ---
 
 <CraftLayout title="Skills">
-  <main class="grow">
-    <CardsList>
-      {
-        skillsList.map(async (skill) => {
-          const projects = await getCollection("projects").then((items) =>
-            items.filter((project) =>
-              project.data.skills.some((item) => item.slug === skill.data.id)
-            )
-          );
+  <main class="grow flex flex-col gap-16">
+    <section class="flex flex-col gap-10">
+      <div class="flex gap-2 items-center">
+        <h2 class="text-xl font-bold text-primary">Featured</h2>
+        <span class="text-primary max-w-[24px]">
+          <Fragment set:html={Star} />
+        </span>
+      </div>
 
-          const learnings = await getCollection("learn").then((items) =>
-            items.filter((learning) =>
-              learning.data.skills.some((item) => item.slug === skill.data.id)
-            )
-          );
+      <CardsList>
+        {
+          skillsList
+            .filter((skill) => skill.data.weight !== Weight.Highlighted)
+            .map(async (skill) => {
+              const projects = await getCollection("projects").then((items) =>
+                items.filter((project) =>
+                  project.data.skills.some(
+                    (item) => item.slug === skill.data.id
+                  )
+                )
+              );
 
-          const experience = getElapsedTimeInYears(
-            projects.map((item) => ({
-              start: item.data.from,
-              end: item.data.to,
-            }))
-          );
+              const learnings = await getCollection("learn").then((items) =>
+                items.filter((learning) =>
+                  learning.data.skills.some(
+                    (item) => item.slug === skill.data.id
+                  )
+                )
+              );
 
-          return (
-            <li class="flex">
-              <Card
-                title={skill.data.display_name}
-                experience={experience}
-                projects={projects.length}
-                courses={learnings.length}
-                url={paths.skillDetails(skill.data.id)}
-                className="grow"
-              />
-            </li>
-          );
-        })
-      }
-    </CardsList>
+              const experience = getElapsedTimeInYears(
+                projects.map((item) => ({
+                  start: item.data.from,
+                  end: item.data.to,
+                }))
+              );
+
+              return (
+                <li class="flex">
+                  <Card
+                    title={skill.data.display_name}
+                    experience={experience}
+                    projects={projects.length}
+                    courses={learnings.length}
+                    url={paths.skillDetails(skill.data.id)}
+                    className="grow"
+                  />
+                </li>
+              );
+            })
+        }
+      </CardsList>
+    </section>
+
+    <section class="flex flex-col gap-10">
+      <div class="flex items-center">
+        <h2 class="text-xl font-bold text-primary">Other</h2>
+      </div>
+
+      <CardsList>
+        {
+          skillsList.map(async (skill) => {
+            const projects = await getCollection("projects").then((items) =>
+              items.filter((project) =>
+                project.data.skills.some((item) => item.slug === skill.data.id)
+              )
+            );
+
+            const learnings = await getCollection("learn").then((items) =>
+              items.filter((learning) =>
+                learning.data.skills.some((item) => item.slug === skill.data.id)
+              )
+            );
+
+            const experience = getElapsedTimeInYears(
+              projects.map((item) => ({
+                start: item.data.from,
+                end: item.data.to,
+              }))
+            );
+
+            return (
+              <li class="flex">
+                <Card
+                  title={skill.data.display_name}
+                  experience={experience}
+                  projects={projects.length}
+                  courses={learnings.length}
+                  url={paths.skillDetails(skill.data.id)}
+                  className="grow"
+                />
+              </li>
+            );
+          })
+        }
+      </CardsList>
+    </section>
   </main>
 </CraftLayout>

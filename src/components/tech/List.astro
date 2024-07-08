@@ -5,8 +5,10 @@ import CraftLayout from "../../layouts/CraftLayout.astro";
 import Card from "./Card.astro";
 import { paths } from "../../paths";
 import CardsList from "../CardsList.astro";
+import Star from "../../assets/star.svg?raw";
 import { getElapsedTimeInYears } from "../../utils/dates";
 import { order } from "../../content/_tech";
+import { Weight } from "../../content/_shared";
 
 const techList = await getCollection("tech").then((items) =>
   items.sort((a, b) => order.indexOf(a.data.id) - order.indexOf(b.data.id))
@@ -14,40 +16,92 @@ const techList = await getCollection("tech").then((items) =>
 ---
 
 <CraftLayout title="Technologies">
-  <main class="grow">
-    <CardsList>
-      {
-        techList.map(async (tech) => {
-          const projects = await getCollection("projects").then((items) =>
-            items.filter((item) =>
-              item.data.tech.some(({ slug }) => slug === tech.data.id)
-            )
-          );
+  <main class="grow flex flex-col gap-16">
+    <section class="flex flex-col gap-10">
+      <div class="flex gap-2 items-center">
+        <h2 class="text-xl font-bold text-primary">Featured</h2>
+        <span class="text-primary max-w-[24px]">
+          <Fragment set:html={Star} />
+        </span>
+      </div>
+      <CardsList>
+        {
+          techList
+            .filter((tech) => tech.data.weight === Weight.Highlighted)
+            .map(async (tech) => {
+              const projects = await getCollection("projects").then((items) =>
+                items.filter((item) =>
+                  item.data.tech.some(({ slug }) => slug === tech.data.id)
+                )
+              );
 
-          const learnings = await getCollection("learn").then((items) =>
-            items.filter((item) =>
-              item.data.tech.some(({ slug }) => slug === tech.data.id)
-            )
-          );
+              const learnings = await getCollection("learn").then((items) =>
+                items.filter((item) =>
+                  item.data.tech.some(({ slug }) => slug === tech.data.id)
+                )
+              );
 
-          const experience = getElapsedTimeInYears(
-            projects.map((p) => ({ start: p.data.from, end: p.data.to }))
-          );
+              const experience = getElapsedTimeInYears(
+                projects.map((p) => ({ start: p.data.from, end: p.data.to }))
+              );
 
-          return (
-            <li class="flex">
-              <Card
-                title={tech.data.display_name}
-                experience={experience}
-                projects={projects.length}
-                learnings={learnings.length}
-                url={paths.techDetails(tech.data.id)}
-                className="grow"
-              />
-            </li>
-          );
-        })
-      }
-    </CardsList>
+              return (
+                <li class="flex">
+                  <Card
+                    title={tech.data.display_name}
+                    experience={experience}
+                    projects={projects.length}
+                    learnings={learnings.length}
+                    url={paths.techDetails(tech.data.id)}
+                    className="grow"
+                  />
+                </li>
+              );
+            })
+        }
+      </CardsList>
+    </section>
+
+    <section class="flex flex-col gap-10">
+      <div class="flex items-center">
+        <h2 class="text-xl font-bold text-primary">Other</h2>
+      </div>
+      <CardsList>
+        {
+          techList
+            .filter((tech) => tech.data.weight !== Weight.Highlighted)
+            .map(async (tech) => {
+              const projects = await getCollection("projects").then((items) =>
+                items.filter((item) =>
+                  item.data.tech.some(({ slug }) => slug === tech.data.id)
+                )
+              );
+
+              const learnings = await getCollection("learn").then((items) =>
+                items.filter((item) =>
+                  item.data.tech.some(({ slug }) => slug === tech.data.id)
+                )
+              );
+
+              const experience = getElapsedTimeInYears(
+                projects.map((p) => ({ start: p.data.from, end: p.data.to }))
+              );
+
+              return (
+                <li class="flex">
+                  <Card
+                    title={tech.data.display_name}
+                    experience={experience}
+                    projects={projects.length}
+                    learnings={learnings.length}
+                    url={paths.techDetails(tech.data.id)}
+                    className="grow"
+                  />
+                </li>
+              );
+            })
+        }
+      </CardsList>
+    </section>
   </main>
 </CraftLayout>

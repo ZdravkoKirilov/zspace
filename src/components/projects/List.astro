@@ -16,10 +16,10 @@ const projectsList = await getCollection("projects").then((items) =>
 
 <CraftLayout title="Learnings">
   <main class="grow flex flex-col gap-16">
-    <section class="flex flex-col gap-8">
-      <div class="flex gap-4 items-center">
-        <h2 class="text-xl">Featured projects</h2>
-        <span class="text-primary max-w-[32px]">
+    <section class="flex flex-col gap-10">
+      <div class="flex gap-2 items-center">
+        <h2 class="text-xl font-bold text-primary">Featured</h2>
+        <span class="text-primary max-w-[24px]">
           <Fragment set:html={Star} />
         </span>
       </div>
@@ -48,9 +48,9 @@ const projectsList = await getCollection("projects").then((items) =>
       </CardsList>
     </section>
 
-    <section class="flex flex-col gap-8">
-      <div class="flex gap-4 items-center">
-        <h2 class="text-xl">Other projects</h2>
+    <section class="flex flex-col gap-10">
+      <div class="flex items-center">
+        <h2 class="text-xl font-bold text-primary">Other</h2>
       </div>
 
       <CardsList>
